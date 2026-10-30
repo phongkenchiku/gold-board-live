@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-10-30T15:46:21.947Z",
+ "updated_at": "2026-10-30T16:43:25.894Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-10-30T15:46:21.850Z",
+  "fetched_at": "2026-10-30T16:43:25.800Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -2,
@@ -48,14 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-10-30T15:46:21.709Z",
+  "fetched_at": "2026-10-30T16:43:25.593Z",
   "items": [
-   {
-    "time_jst": "01:00",
-    "title": "Fed — Daly phát biểu",
-    "impact": "medium",
-    "forecast": null
-   },
    {
     "time_jst": "01:30",
     "title": "Fed — Musalem phát biểu",
