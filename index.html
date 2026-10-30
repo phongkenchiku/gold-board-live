@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XAUUSD — Bảng trực tiếp</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:1560px; height:1040px; }
+  body {
+    font-family:"Noto Sans","DejaVu Sans",sans-serif;
+    background:radial-gradient(1300px 760px at 28% -10%, #18251e 0%, #0a0e0c 55%, #060808 100%);
+    color:#e9e6da; overflow:hidden;
+    padding:12px 16px; display:flex; flex-direction:column; gap:8px;
+  }
+  .panel {
+    background:linear-gradient(180deg, rgba(18,26,22,.94), rgba(9,13,11,.96));
+    border:1px solid #2c352c; border-radius:10px;
+  }
+  /* ---------- header ---------- */
+  header { height:62px; flex:none; display:flex; align-items:center; position:relative; }
+  .brand { display:flex; align-items:baseline; gap:16px; }
+  .brand h1 {
+    font-size:50px; font-weight:800; letter-spacing:1px; line-height:1;
+    background:linear-gradient(180deg,#f7dc7d 15%,#d9a92e 55%,#9a7414 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .brand .script { font-family:Georgia,"Noto Serif","DejaVu Serif",serif; font-style:italic; font-size:25px; color:#e8c766; }
+  .brand .sub { font-size:11px; letter-spacing:2.2px; color:#a9a48f; margin-top:3px; }
+  .sess-center { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); text-align:center; }
+  .sess-center .pill {
+    display:inline-block; background:linear-gradient(180deg,#e9c95c,#c39a22); color:#221a02;
+    font-weight:800; font-size:19px; letter-spacing:1px; padding:4px 20px; border-radius:20px;
+  }
+  .sess-center .date { font-size:16px; font-weight:700; color:#f0e9d2; margin-left:10px; }
+  .price-box { margin-left:auto; text-align:right; }
+  .price-box .p { font-size:40px; font-weight:800; color:#f0d060; line-height:1; }
+  .price-box .t { font-size:12.5px; color:#c9c4b2; margin-top:4px; }
+  /* ---------- macro strip ---------- */
+  .macro {
+    height:34px; flex:none; display:flex; align-items:center; gap:12px;
+    padding:0 14px; overflow:hidden; white-space:nowrap; font-size:13px; color:#ddd8c6;
+  }
+  .macro .m-label { font-size:12px; font-weight:800; letter-spacing:2px; color:#e8c766; flex:none; }
+  .macro .m-verdict { flex:none; font-weight:800; font-size:13px; padding:3px 11px; border-radius:12px; border:1px solid; }
+  .macro .m-verdict.press   { color:#ff8f8f; border-color:rgba(229,72,77,.6);  background:rgba(229,72,77,.12); }
+  .macro .m-verdict.support { color:#5fd9ae; border-color:rgba(38,190,133,.6); background:rgba(38,190,133,.12); }
+  .macro .m-verdict.neutral { color:#e8c766; border-color:rgba(232,199,102,.55); background:rgba(232,199,102,.10); }
+  .macro .m-verdict.na      { color:#a9a48f; border-color:rgba(169,164,143,.5); background:rgba(169,164,143,.10); }
+  .macro .m-items { display:flex; gap:13px; flex:none; }
+  .macro .m-item b { color:#f0e9d2; font-weight:700; }
+  .macro .m-item .m-date { color:#8b8776; font-size:11.5px; }
+  .macro .m-sep { width:1px; height:20px; background:#3a443a; flex:none; }
+  .macro .m-long { overflow:hidden; text-overflow:ellipsis; }
+  .macro .m-long b.sup { color:#5fd9ae; } .macro .m-long b.press { color:#ff8f8f; }
+  /* ---------- frames strip ---------- */
+  .frames { height:118px; flex:none; display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; }
+  .frame { padding:7px 12px 6px; display:flex; flex-direction:column; }
+  .frame .fh { display:flex; align-items:center; gap:9px; }
+  .frame .fh .tf { font-size:19px; font-weight:800; color:#f0e9d2; letter-spacing:1px; }
+  .tbadge { font-size:12px; font-weight:800; letter-spacing:.6px; padding:2px 9px; border-radius:10px; border:1px solid; }
+  .tbadge.up   { color:#3ddc97; border-color:rgba(38,190,133,.6); background:rgba(38,190,133,.12); }
+  .tbadge.down { color:#ff8f8f; border-color:rgba(229,72,77,.6);  background:rgba(229,72,77,.12); }
+  .tbadge.flat { color:#e8c766; border-color:rgba(232,199,102,.55); background:rgba(232,199,102,.10); }
+  .frame .fh .fp { margin-left:auto; font-size:13px; color:#a9a48f; }
+  .frame canvas { width:100%; height:49px; display:block; margin-top:2px; }
+  .frame .stats { display:flex; gap:16px; font-size:12.5px; color:#c9c4b2; margin-top:2px; }
+  .frame .stats b { color:#e8c766; font-weight:700; }
+  /* ---------- middle ---------- */
+  .middle { flex:1; display:grid; grid-template-columns:1fr 376px; gap:10px; min-height:0; }
+  .chart-panel { display:flex; flex-direction:column; padding:8px 10px 8px; position:relative; }
+  .chart-head { display:flex; align-items:center; gap:12px; height:24px; flex:none; }
+  .chart-head .ct { font-size:17px; font-weight:800; letter-spacing:.6px; color:#f0e9d2; }
+  .chart-head .facts { font-size:11.5px; color:#a9a48f; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .chart-box { position:relative; flex:1; min-height:0; }
+  .chart-box canvas { position:absolute; inset:0; width:100%; height:100%; }
+  .sub-box { height:138px; flex:none; position:relative; margin-top:2px; }
+  .sub-box canvas { position:absolute; inset:0; width:100%; height:100%; }
+  .timeline { height:22px; flex:none; position:relative; margin-top:4px; border-radius:5px; overflow:hidden; }
+  .timeline canvas { position:absolute; inset:0; width:100%; height:100%; }
+  /* ---------- right column ---------- */
+  .side { display:flex; flex-direction:column; gap:8px; min-height:0; overflow:hidden; }
+  .strategy { padding:9px 14px 10px; border:1.5px solid #4a4230; }
+  .strategy .st-head { display:flex; align-items:center; justify-content:space-between; }
+  .strategy .st-title { font-size:14px; font-weight:800; letter-spacing:1.6px; color:#e8c766; }
+  .strategy .headline { font-size:27px; font-weight:800; line-height:1.12; margin-top:4px; }
+  .strategy .headline.sell { color:#ff6d6d; } .strategy .headline.buy { color:#3ddc97; }
+  .strategy .ez { margin-top:7px; display:flex; align-items:baseline; gap:12px; }
+  .strategy .ez .lbl { font-size:12.5px; color:#c9c4b2; }
+  .strategy .ez .val { font-size:25px; font-weight:800; color:#f0e9d2; }
+  .strategy .ez .alt { font-size:13px; color:#c9c4b2; } .strategy .ez .alt b { color:#f0d060; }
+  .strategy .conds { margin-top:7px; }
+  .strategy .conds .cl { font-size:12px; font-weight:700; letter-spacing:1px; color:#a9a48f; margin-bottom:2px; }
+  .strategy .conds li { font-size:12px; line-height:1.35; color:#ddd8c6; list-style:none; padding-left:13px; position:relative; }
+  .strategy .conds li::before { content:"•"; position:absolute; left:2px; color:#e8c766; }
+  .strategy .tps { margin-top:8px; border-top:1px dashed #3a443a; padding-top:7px; display:flex; flex-direction:column; gap:3px; }
+  .strategy .tp { display:flex; align-items:baseline; font-size:14.5px; }
+  .strategy .tp .k { width:100px; flex:none; color:#a9a48f; font-weight:700; font-size:12.5px; letter-spacing:.5px; }
+  .strategy .tp .v { font-weight:800; color:#5fd9ae; }
+  .strategy .tp.selldir .v { color:#ff8f8f; }
+  .strategy .tp.ext .v { color:#e8c766; }
+  .strategy .sl { margin-top:8px; background:rgba(229,72,77,.13); border:1px solid rgba(229,72,77,.55); border-radius:7px; padding:5px 10px; display:flex; gap:10px; align-items:baseline; }
+  .strategy .sl .k { font-size:12.5px; font-weight:700; color:#ff8f8f; letter-spacing:.5px; }
+  .strategy .sl .v { font-size:16.5px; font-weight:800; color:#ffb3b3; }
+  .strategy .fallback { font-size:12.5px; line-height:1.45; color:#ddd8c6; }
+  .scen { padding:8px 14px 9px; }
+  .scen .sh { font-size:15.5px; font-weight:800; line-height:1.2; }
+  .scen.sell .sh { color:#ff8f8f; } .scen.buy .sh { color:#5fd9ae; }
+  .scen .sl2 { font-size:12px; line-height:1.38; color:#ddd8c6; margin-top:2px; }
+  .scen .sl2 b { color:#f0e9d2; }
+  .news { padding:8px 14px 9px; }
+  .news .nh { font-size:13px; font-weight:800; letter-spacing:1.2px; color:#e8c766; margin-bottom:4px; }
+  .news .nr { display:flex; gap:10px; font-size:12.5px; line-height:1.38; color:#ddd8c6; }
+  .news .nr .nt { font-weight:800; color:#f0d060; flex:none; min-width:44px; }
+  .news .nr .dot { flex:none; margin-top:1px; }
+  .news .empty { font-size:12.5px; color:#a9a48f; }
+  footer { flex:none; display:flex; justify-content:space-between; font-size:11px; color:#8b8776; }
+  .err { color:#ff8f8f; font-size:20px; padding:40px; }
+  #livePill {
+    position:fixed; top:10px; right:10px; z-index:99; display:flex; gap:10px; align-items:center;
+    background:rgba(8,10,9,.88); border:1px solid #4a4230; border-radius:20px; padding:5px 8px 5px 14px;
+    font-size:13px; color:#e9e6da;
+  }
+  #livePill .dot { width:9px; height:9px; border-radius:50%; background:#3ddc97; box-shadow:0 0 7px #3ddc97; }
+  #livePill button {
+    background:linear-gradient(180deg,#e9c95c,#c39a22); color:#221a02; border:0; border-radius:14px;
+    font-weight:800; font-size:12.5px; padding:4px 12px; cursor:pointer;
+  }
+  #livePill #symChips { display:flex; gap:5px; }
+  #livePill button.sym { background:transparent; color:#c9c4b2; border:1px solid #4a4230; }
+  #livePill button.sym.on { background:linear-gradient(180deg,#e9c95c,#c39a22); color:#221a02; border-color:#c39a22; }
+  #tfChips { margin-left:auto; display:flex; gap:5px; flex:none; }
+  #tfChips button {
+    background:rgba(8,10,9,.85); color:#c9c4b2; border:1px solid #4a4230; border-radius:13px;
+    font-size:12.5px; font-weight:700; padding:3px 11px; cursor:pointer;
+  }
+  #tfChips button.on { background:linear-gradient(180deg,#e9c95c,#c39a22); color:#221a02; border-color:#c39a22; }
+</style>
+</head>
+<body>
+  <div id="livePill"><span class="dot"></span><span id="symChips"><button data-sym="XAU" class="sym on">VÀNG</button><button data-sym="BTC" class="sym">BITCOIN</button></span><span id="liveStatus">Đang tải dữ liệu…</span><button onclick="__liveCount=0;computeAndRender()">Cập nhật ngay</button></div>
+  <header>
+    <div class="brand">
+      <div>
+        <div style="display:flex; align-items:baseline; gap:16px;">
+          <h1 id="symTitle">XAUUSD</h1>
+          <span class="script">NowTrading - Như Nó Là</span>
+        </div>
+        <div class="sub">GIAO DỊCH THEO XU HƯỚNG · ĐỢI ĐIỂM BÙNG NỔ · QUẢN TRỊ RỦI RO</div>
+      </div>
+    </div>
+    <div class="sess-center">
+      <span class="pill" id="sessLabel">PHIÊN ÂU</span><span class="date" id="sessDate">30/10/2026</span>
+    </div>
+    <div class="price-box">
+      <div class="p" id="priceBig">—</div>
+      <div class="t"><span id="timeTokyo">Tokyo: —</span> · <span id="timeVn">VN: —</span></div>
+    </div>
+  </header>
+
+  <section class="panel macro" id="macroStrip">
+    <span class="m-label">VĨ MÔ</span>
+    <span class="m-verdict na" id="mShortVerdict">NGẮN HẠN: —</span>
+    <span class="m-items" id="mShortItems"></span>
+    <span class="m-sep"></span>
+    <span class="m-long" id="mLong"></span>
+  </section>
+
+  <section class="frames" id="framesRow"></section>
+
+  <section class="middle">
+    <div class="panel chart-panel">
+      <div class="chart-head">
+        <span class="ct" id="chartTitle">XAUUSD - M15</span>
+        <span class="tbadge flat" id="h1Badge">H1: —</span>
+        <span class="facts" id="h1Facts"></span><span id="tfChips"><button data-tf="M1">1P</button><button data-tf="M5">5P</button><button data-tf="M15" class="on">15P</button><button data-tf="M30">30P</button><button data-tf="H1">1H</button></span>
+      </div>
+      <div class="chart-box"><canvas id="mainChart"></canvas></div>
+      <div class="sub-box"><canvas id="subChart"></canvas></div>
+      <div class="timeline"><canvas id="tlChart"></canvas></div>
+    </div>
+    <div class="side">
+      <div class="panel strategy" id="strategyBox"></div>
+      <div class="panel scen" id="scen2Box"></div>
+      <div class="panel scen" id="scen3Box"></div>
+      <div class="panel news" id="newsBox"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Bảng phân tích tự động theo chỉ báo — không phải lời khuyên đầu tư. Vùng giá tính từ nến M15, xu hướng chính theo H1.</div>
+    <div id="srcLine">Dữ liệu: — · Cập nhật: —</div>
+  </footer>
+
+<script>
+/* ===== compute engine (browser port of fetch_indicators/fetch_macro/fetch_news) ===== */
+const r2 = (x) => (x == null || !isFinite(x) ? null : Math.round(x * 100) / 100);
+const fmt = (n) => Math.round(n).toLocaleString('de-DE'); // 4.010 style
+const zoneStr = (z) => (z ? `${fmt(z[0])} – ${fmt(z[1])}` : null);
+
+/* ---- instruments: XAUUSD (default) and Bitcoin ----
+ * Node: BOARD_INSTRUMENT=BTC or --btc selects Bitcoin (the hourly cron
+ * uses this on weekends Sat+Sun, when the gold market is closed).
+ * Browser (live page): setInstrument('BTC' | 'XAU') switches in-page.
+ * NOTE: this block must stay AFTER 'const r2' — build_live.py extracts
+ * the browser engine starting at that marker. */
+const INSTRUMENTS = {
+  XAU: { key: 'XAU', symbol: 'XAUUSD', name: 'Vàng', bybit: 'XAUUSDT', okx: 'XAU-USDT-SWAP' },
+  BTC: { key: 'BTC', symbol: 'BTCUSD', name: 'Bitcoin', bybit: 'BTCUSDT', okx: 'BTC-USDT-SWAP' },
+};
+let ACTIVE_INSTRUMENT_KEY = 'XAU';
+try {
+  if (typeof process !== 'undefined' && process.env && INSTRUMENTS[process.env.BOARD_INSTRUMENT]) ACTIVE_INSTRUMENT_KEY = process.env.BOARD_INSTRUMENT;
+  if (typeof process !== 'undefined' && process.argv && process.argv.some((a) => a === '--btc')) ACTIVE_INSTRUMENT_KEY = 'BTC';
+} catch (e) {}
+let INSTR = INSTRUMENTS[ACTIVE_INSTRUMENT_KEY];
+function setInstrument(key) { if (INSTRUMENTS[key]) { ACTIVE_INSTRUMENT_KEY = key; INSTR = INSTRUMENTS[key]; } return INSTR; }
+function getInstrument() { return INSTR; }
+
+/* ---------------- data fetch ---------------- */
+async function fetchJson(url, timeoutMs = 20000) {
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { signal: ctl.signal, headers: {} });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } finally { clearTimeout(t); }
+}
+
+async function fetchBybit(interval, limit) {
+  const url = `https://api.bybit.com/v5/market/kline?category=linear&symbol=${INSTR.bybit}&interval=${interval}&limit=${limit}`;
+  const j = await fetchJson(url);
+  if (j.retCode !== 0 || !j.result || !Array.isArray(j.result.list)) {
+    throw new Error(`Bybit retCode=${j.retCode} ${j.retMsg || ''}`);
+  }
+  const rows = j.result.list.slice().reverse(); // oldest -> newest
+  return rows.map((r) => ({ ts: +r[0], o: +r[1], h: +r[2], l: +r[3], c: +r[4] }));
+}
+
+async function fetchOkx(bar, limit) {
+  const url = `https://www.okx.com/api/v5/market/candles?instId=${INSTR.okx}&bar=${bar}&limit=${limit}`;
+  const j = await fetchJson(url);
+  if (j.code !== '0' || !Array.isArray(j.data)) throw new Error(`OKX code=${j.code} ${j.msg || ''}`);
+  const rows = j.data.slice().reverse();
+  return rows.map((r) => ({ ts: +r[0], o: +r[1], h: +r[2], l: +r[3], c: +r[4] }));
+}
+
+async function fetchCandles(intervalKey) {
+  const bybitInterval = { H1: '60', M30: '30', M15: '15', M5: '5' }[intervalKey];
+  const okxBar = { H1: '1H', M30: '30m', M15: '15m', M5: '5m' }[intervalKey];
+  try {
+    const c = await fetchBybit(bybitInterval, 1000);
+    if (c.length < 250) throw new Error(`Bybit returned only ${c.length} candles`);
+    return { candles: c, source: 'Bybit ' + INSTR.bybit };
+  } catch (e) {
+    console.error(`[fetch] Bybit ${intervalKey} failed (${e.message}); trying OKX…`);
+    const c = await fetchOkx(okxBar, 300);
+    if (c.length < 150) throw new Error(`OKX returned only ${c.length} candles for ${intervalKey}`);
+    return { candles: c, source: 'OKX ' + INSTR.okx };
+  }
+}
+
+/* ---------------- indicators ---------------- */
+function emaArr(arr, period) {
+  const k = 2 / (period + 1);
+  const out = new Array(arr.length).fill(null);
+  let seed = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (i < period - 1) continue;
+    if (i === period - 1) {
+      let s = 0; for (let j = 0; j < period; j++) s += arr[j];
+      out[i] = s / period; seed = out[i];
+    } else out[i] = arr[i] * k + out[i - 1] * (1 - k);
+  }
+  return out;
+}
+
+function rsiWilder(closes, period = 14) {
+  const out = new Array(closes.length).fill(null);
+  if (closes.length <= period) return out;
+  let gain = 0, loss = 0;
+  for (let i = 1; i <= period; i++) {
+    const d = closes[i] - closes[i - 1];
+    if (d > 0) gain += d; else loss -= d;
+  }
+  gain /= period; loss /= period;
+  out[period] = loss === 0 ? 100 : 100 - 100 / (1 + gain / loss);
+  for (let i = period + 1; i < closes.length; i++) {
+    const d = closes[i] - closes[i - 1];
+    gain = (gain * (period - 1) + Math.max(d, 0)) / period;
+    loss = (loss * (period - 1) + Math.max(-d, 0)) / period;
+    out[i] = loss === 0 ? 100 : 100 - 100 / (1 + gain / loss);
+  }
+  return out;
+}
+
+function dmSeries(candles, period = 14) {
+  const n = candles.length;
+  const tr = new Array(n).fill(0), pdm = new Array(n).fill(0), mdm = new Array(n).fill(0);
+  for (let i = 1; i < n; i++) {
+    const { h, l } = candles[i], p = candles[i - 1];
+    tr[i] = Math.max(h - l, Math.abs(h - p.c), Math.abs(l - p.c));
+    const up = h - p.h, dn = p.l - l;
+    pdm[i] = up > dn && up > 0 ? up : 0;
+    mdm[i] = dn > up && dn > 0 ? dn : 0;
+  }
+  const sTR = new Array(n).fill(null), sP = new Array(n).fill(null), sM = new Array(n).fill(null);
+  if (n > period) {
+    let a = 0, b = 0, c = 0;
+    for (let i = 1; i <= period; i++) { a += tr[i]; b += pdm[i]; c += mdm[i]; }
+    sTR[period] = a; sP[period] = b; sM[period] = c;
+    for (let i = period + 1; i < n; i++) {
+      sTR[i] = sTR[i - 1] - sTR[i - 1] / period + tr[i];
+      sP[i] = sP[i - 1] - sP[i - 1] / period + pdm[i];
+      sM[i] = sM[i - 1] - sM[i - 1] / period + mdm[i];
+    }
+  }
+  return { sTR, sP, sM };
+}
+
+function adxWilder(candles, period = 14) {
+  const n = candles.length;
+  const { sTR, sP, sM } = dmSeries(candles, period);
+  const pDI = new Array(n).fill(null), mDI = new Array(n).fill(null), dx = new Array(n).fill(null);
+  for (let i = period; i < n; i++) {
+    if (!sTR[i]) continue;
+    pDI[i] = 100 * sP[i] / sTR[i];
+    mDI[i] = 100 * sM[i] / sTR[i];
+    const s = pDI[i] + mDI[i];
+    dx[i] = s === 0 ? 0 : 100 * Math.abs(pDI[i] - mDI[i]) / s;
+  }
+  const adx = new Array(n).fill(null);
+  const first = 2 * period - 1;
+  if (first < n && dx[first] != null) {
+    let avg = 0; for (let i = period; i <= first; i++) avg += dx[i] || 0;
+    adx[first] = avg / period;
+    for (let i = first + 1; i < n; i++) adx[i] = (adx[i - 1] * (period - 1) + (dx[i] || 0)) / period;
+  }
+  return { adx, pDI, mDI };
+}
+
+function atrWilder(candles, period = 14) {
+  const { sTR } = dmSeries(candles, period);
+  const last = sTR[sTR.length - 1];
+  return last == null ? null : last / period;
+}
+
+function macd(closes) {
+  const e12 = emaArr(closes, 12), e26 = emaArr(closes, 26);
+  const line = closes.map((_, i) => (e12[i] != null && e26[i] != null ? e12[i] - e26[i] : null));
+  const start = line.findIndex((v) => v != null);
+  const sub = line.slice(start);
+  const sigSub = emaArr(sub, 9);
+  const signal = line.map((_, i) => (i < start ? null : sigSub[i - start]));
+  const hist = line.map((v, i) => (v != null && signal[i] != null ? v - signal[i] : null));
+  return { line, signal, hist };
+}
+
+function ichimoku(candles) {
+  const n = candles.length;
+  const tenkan = new Array(n).fill(null), kijun = new Array(n).fill(null);
+  const spanAraw = new Array(n).fill(null), spanBraw = new Array(n).fill(null);
+  const hh = (i, p) => { let m = -Infinity; for (let j = i - p + 1; j <= i; j++) m = Math.max(m, candles[j].h); return m; };
+  const ll = (i, p) => { let m = Infinity; for (let j = i - p + 1; j <= i; j++) m = Math.min(m, candles[j].l); return m; };
+  for (let i = 0; i < n; i++) {
+    if (i >= 8) tenkan[i] = (hh(i, 9) + ll(i, 9)) / 2;
+    if (i >= 25) kijun[i] = (hh(i, 26) + ll(i, 26)) / 2;
+    if (tenkan[i] != null && kijun[i] != null) spanAraw[i] = (tenkan[i] + kijun[i]) / 2;
+    if (i >= 51) spanBraw[i] = (hh(i, 52) + ll(i, 52)) / 2;
+  }
+  return { tenkan, kijun, spanAraw, spanBraw };
+}
+
+/* ---------------- zones (Sói-style swing clustering) ---------------- */
+function swingPoints(candles, left = 2, right = 2) {
+  const pts = [];
+  for (let i = left; i < candles.length - right; i++) {
+    let isH = true, isL = true;
+    for (let j = 1; j <= left; j++) {
+      if (candles[i - j].h >= candles[i].h) isH = false;
+      if (candles[i - j].l <= candles[i].l) isL = false;
+    }
+    for (let j = 1; j <= right; j++) {
+      if (candles[i + j].h > candles[i].h) isH = false;
+      if (candles[i + j].l < candles[i].l) isL = false;
+    }
+    if (isH) pts.push(candles[i].h);
+    if (isL) pts.push(candles[i].l);
+  }
+  return pts;
+}
+
+function buildZones(candles, price, atr, maxWidth) {
+  const tol = 0.5 * atr;
+  const pts = swingPoints(candles.slice(-400)).sort((a, b) => a - b);
+  const clusters = [];
+  for (const p of pts) {
+    const cur = clusters[clusters.length - 1];
+    if (cur && p - cur.max <= tol) { cur.max = p; cur.pts.push(p); }
+    else clusters.push({ min: p, max: p, pts: [p] });
+  }
+  const zones = clusters.map((c) => {
+    let { min: lo, max: hi } = c;
+    const center = c.pts.reduce((s, x) => s + x, 0) / c.pts.length;
+    /* Cap absurdly wide chained clusters around their centre so a zone
+     * stays a tradeable band instead of a 60-dollar slab. */
+    if (maxWidth && hi - lo > maxWidth) { lo = center - maxWidth / 2; hi = center + maxWidth / 2; }
+    return { lo, hi, center, touches: c.pts.length };
+  });
+  const res = zones.filter((z) => z.center > price).sort((a, b) => a.center - b.center);
+  const sup = zones.filter((z) => z.center < price).sort((a, b) => b.center - a.center);
+  const pack = (z) => {
+    if (!z) return null;
+    let lo = Math.floor(z.lo), hi = Math.ceil(z.hi);
+    /* Minimum visible width scales with ATR: 3 USD for gold, but a
+     * 3-dollar band on Bitcoin (~100k) would be invisible/meaningless. */
+    const minW = atr && isFinite(atr) ? Math.max(3, 0.18 * atr) : 3;
+    if (hi - lo < minW) {
+      if (minW <= 3) { lo -= 1; hi += 2; }
+      else { const c = (lo + hi) / 2; lo = Math.floor(c - minW / 2); hi = Math.ceil(c + minW / 2); }
+    }
+    return [lo, hi];
+  };
+  return {
+    res_mid: pack(res[0]),
+    res_strong: pack(res[1]),
+    res_far: pack(res[2]),
+    sup_near: pack(sup[0]),
+    sup_strong: pack(sup[1]),
+    sup_far: pack(sup[2]),
+    res_list: res.slice(0, 3).map(pack),
+    sup_list: sup.slice(0, 3).map(pack),
+  };
+}
+
+/* Synthetic fallback zone when price has run past every real swing zone
+ * on one side (the 2026-10-30 17:06 crash: no support below at all). */
+function synthZone(price, atr, dir, k1, k2) {
+  const a = price + dir * k1 * atr, b = price + dir * k2 * atr;
+  return [Math.floor(Math.min(a, b)), Math.ceil(Math.max(a, b))];
+}
+
+/* Trendline over the displayed window: two swing anchors, descending
+ * through swing highs for a downtrend, ascending through swing lows
+ * for an uptrend. Returns {a:{i,p}, b:{i,p}, kind} in candle indexes
+ * of the given (already sliced) candle array, or null. */
+function buildTrendline(candles, prefer) {
+  const swings = [];
+  for (let i = 3; i < candles.length - 3; i++) {
+    let isH = true, isL = true;
+    for (let j = 1; j <= 3; j++) {
+      if (candles[i - j].h >= candles[i].h || candles[i + j].h > candles[i].h) isH = false;
+      if (candles[i - j].l <= candles[i].l || candles[i + j].l < candles[i].l) isL = false;
+    }
+    if (isH) swings.push({ i, p: candles[i].h, kind: 'H' });
+    if (isL) swings.push({ i, p: candles[i].l, kind: 'L' });
+  }
+  const tryLine = (kind) => {
+    const pts = swings.filter((s) => s.kind === kind);
+    if (pts.length < 2) return null;
+    /* anchor 1: the extreme swing in the first 65% of the window */
+    const head = pts.filter((s) => s.i < candles.length * 0.65);
+    if (!head.length) return null;
+    const a = head.reduce((best, s) => (kind === 'H' ? (s.p > best.p ? s : best) : (s.p < best.p ? s : best)), head[0]);
+    /* anchor 2: the MOST RECENT later swing continuing the slope, so the
+     * line runs from the major extreme down/up to current structure */
+    const later = pts.filter((s) => s.i > a.i + 8 && (kind === 'H' ? s.p < a.p : s.p > a.p));
+    if (!later.length) return null;
+    const b = later[later.length - 1];
+    return { a: { i: a.i, p: r2(a.p) }, b: { i: b.i, p: r2(b.p) }, kind: kind === 'H' ? 'down' : 'up' };
+  };
+  if (prefer === 'down') return tryLine('H') || tryLine('L');
+  if (prefer === 'up') return tryLine('L') || tryLine('H');
+  return tryLine('H') || tryLine('L');
+}
+
+/* ---------------- comments & scenarios ---------------- */
+function frameComment(f, zones, atr) {
+  const parts = [];
+  const p = f.price;
+  if (zones.res_mid && p >= zones.res_mid[0] - 0.3 * atr && p <= zones.res_mid[1]) {
+    parts.push(`Giá đang áp sát vùng kháng cự ${zoneStr(zones.res_mid)}, chờ nến đảo chiều`);
+  } else if (zones.sup_near && p <= zones.sup_near[1] + 0.3 * atr && p >= zones.sup_near[0]) {
+    parts.push(`Giá đang áp sát vùng hỗ trợ ${zoneStr(zones.sup_near)}, chờ nến xác nhận bật lên`);
+  }
+  if (f.adx >= 25) parts.push(f.plus_di > f.minus_di ? 'Động lượng tăng đang chiếm ưu thế' : 'Động lượng giảm đang chiếm ưu thế');
+  else if (f.adx < 20) parts.push('ADX thấp, xu hướng yếu, ưu tiên đứng ngoài');
+  else parts.push(f.plus_di > f.minus_di ? 'Động lượng tăng nhẹ' : 'Động lượng giảm nhẹ');
+  if (f.rsi >= 70) parts.push('RSI quá mua, hạn chế mua đuổi');
+  else if (f.rsi <= 30) parts.push('RSI quá bán, hạn chế bán đuổi');
+  else if (f.rsi > 50) parts.push('RSI trên 50, phe mua nhỉnh hơn');
+  else parts.push('RSI dưới 50, phe bán nhỉnh hơn');
+  return parts.join('. ') + '.';
+}
+
+/* Scenarios v2 — built on the M15 zone set so entry/TP/SL are tight,
+ * tradeable bands like the reference boards, with structured fields
+ * (entry_zone, tps, sl_zone, conditions_list, headline) for the poster
+ * strategy column plus the legacy string fields for summaries.
+ * Every zone access is null-guarded: when price has run past all real
+ * zones on a side, synthetic ATR zones take over (no more crashes). */
+function zoneAt(list, idx, price, atr, dir) {
+  if (list && list[idx]) return list[idx];
+  /* Missing zones are synthesised BEYOND the last real zone on that
+   * side, so TP/SL chains stay monotonic (a price-anchored offset once
+   * produced a TP3 sitting between TP1 and TP2, 2026-10-30 18:06). */
+  const real = (list || []).filter(Boolean);
+  const rank = idx - real.length + 1; /* 1 = first missing */
+  if (dir < 0) {
+    const edge = real.length ? real[real.length - 1][0] : price;
+    const hi = Math.round(edge - rank * atr + 0.25 * atr);
+    return [Math.round(hi - 0.6 * atr), hi];
+  }
+  const edge = real.length ? real[real.length - 1][1] : price;
+  const lo = Math.round(edge + rank * atr - 0.25 * atr);
+  return [lo, Math.round(lo + 0.6 * atr)];
+}
+function slBeyond(zone, buf1, buf2) {
+  return zone ? [zone[1] + buf1, zone[1] + buf2] : null;
+}
+function slBelow(zone, buf1, buf2) {
+  return zone ? [zone[0] - buf2, zone[0] - buf1] : null;
+}
+function tpList(zonesArr, extPrice) {
+  const tps = zonesArr.filter(Boolean).slice(0, 3).map((z, i) => ({
+    label: 'TP' + (i + 1), zone: z, text: zoneStr(z),
+  }));
+  return tps;
+}
+function scenBase(no, title, side, headline) {
+  return { no, title, side, headline, entry_zone: null, entry_alt_zone: null, tps: [], tp_ext: null, sl_zone: null, conditions_list: [] };
+}
+
+function buildScenarios(trend, zones, atr, price, ctx) {
+  const res = zones.res_list || [], sup = zones.sup_list || [];
+  const R1 = zoneAt(res, 0, price, atr, +1), R2 = zoneAt(res, 1, price, atr, +1), R3 = zoneAt(res, 2, price, atr, +1);
+  const S1 = zoneAt(sup, 0, price, atr, -1), S2 = zoneAt(sup, 1, price, atr, -1), S3 = zoneAt(sup, 2, price, atr, -1);
+  const rsiTxt = ctx && ctx.rsi_m15 != null ? ` (RSI M15 hiện ${ctx.rsi_m15})` : '';
+  /* SL buffers scale with M15 ATR: 2/5 USD for gold, proportionally
+   * larger for Bitcoin so the stop is not inside normal noise. */
+  const buf1 = Math.max(2, Math.round(0.12 * atr));
+  const buf2 = Math.max(5, Math.round(0.30 * atr));
+
+  const sellFade = (no, main, alt, isPriority) => {
+    const s = scenBase(no, isPriority ? 'ƯU TIÊN SELL — HỒI LÊN KHÁNG CỰ' : 'SELL — CẠNH TRÊN BIÊN ĐI NGANG', 'SELL',
+      main && alt && alt[0] > main[1] ? 'SELL KHI GIÁ HỒI' : 'SELL Ở KHÁNG CỰ');
+    s.entry_zone = main; s.entry_alt_zone = alt && alt[0] > main[1] ? alt : null;
+    const anchor = s.entry_alt_zone || main;
+    s.sl_zone = [anchor[1] + buf1, anchor[1] + buf2];
+    s.tps = tpList([S1, S2, S3]);
+    s.tp_ext = [Math.round(S3[0] - atr), Math.round(S3[1] - atr)];
+    s.conditions_list = [
+      `Giá hồi lên vùng kháng cự ${zoneStr(main)}${s.entry_alt_zone ? `, tốt hơn ${zoneStr(s.entry_alt_zone)}` : ''}`,
+      'M15 xuất hiện nến đảo chiều giảm (nhấn chìm giảm, pin bar)',
+      `RSI quay đầu xuống, không bán đuổi${rsiTxt}`,
+      'M5 không đóng nến vượt lên khỏi vùng kháng cự',
+    ];
+    s.entry = `Vùng vào: ${zoneStr(main)}${s.entry_alt_zone ? ` (tốt hơn ${zoneStr(s.entry_alt_zone)})` : ''}`;
+    s.conditions = 'Điều kiện: ' + s.conditions_list.join('; ') + '.';
+    s.targets = 'Mục tiêu: ' + s.tps.map((t) => t.text).join(' → ');
+    s.invalidation = `Vô hiệu: Nến M15 đóng trên ${fmt(s.sl_zone[1])}.`;
+    s.note = 'Lưu ý: Chờ nến xác nhận tại vùng rồi mới vào lệnh.';
+    return s;
+  };
+
+  const buyFade = (no, main, alt, isPriority) => {
+    const s = scenBase(no, isPriority ? 'ƯU TIÊN BUY — CHỜ HỒI VỀ HỖ TRỢ' : 'BUY — CẠNH DƯỚI BIÊN ĐI NGANG', 'BUY',
+      main && alt && alt[1] < main[0] ? 'BUY KHI GIÁ HỒI' : 'BUY Ở HỖ TRỢ');
+    s.entry_zone = main; s.entry_alt_zone = alt && alt[1] < main[0] ? alt : null;
+    const anchor = s.entry_alt_zone || main;
+    s.sl_zone = [anchor[0] - buf2, anchor[0] - buf1];
+    s.tps = tpList([R1, R2, R3]);
+    s.tp_ext = [Math.round(R3[0] + atr), Math.round(R3[1] + atr)];
+    s.conditions_list = [
+      `Giá hồi xuống vùng hỗ trợ ${zoneStr(main)}${s.entry_alt_zone ? `, tốt hơn ${zoneStr(s.entry_alt_zone)}` : ''}`,
+      'M15 xuất hiện nến đảo chiều tăng (nhấn chìm tăng, pin bar)',
+      `RSI quay đầu lên, không mua đuổi${rsiTxt}`,
+      'M5 không đóng nến xuyên xuống khỏi vùng hỗ trợ',
+    ];
+    s.entry = `Vùng vào: ${zoneStr(main)}${s.entry_alt_zone ? ` (tốt hơn ${zoneStr(s.entry_alt_zone)})` : ''}`;
+    s.conditions = 'Điều kiện: ' + s.conditions_list.join('; ') + '.';
+    s.targets = 'Mục tiêu: ' + s.tps.map((t) => t.text).join(' → ');
+    s.invalidation = `Vô hiệu: Nến M15 đóng dưới ${fmt(s.sl_zone[0])}.`;
+    s.note = 'Lưu ý: Chờ nến xác nhận tại vùng rồi mới vào lệnh.';
+    return s;
+  };
+
+  const sellBreak = (no, trigger, headline) => {
+    const s = scenBase(no, 'SELL — PHÁ HỖ TRỢ', 'SELL', headline || 'SELL BREAKOUT');
+    s.entry_zone = trigger;
+    s.sl_zone = [trigger[1] + buf1, trigger[1] + buf2];
+    s.tps = tpList([S2, S3]);
+    s.tp_ext = [Math.round(S3[0] - atr), Math.round(S3[1] - atr)];
+    s.conditions_list = [
+      `Chờ M15 đóng nến dưới ${fmt(trigger[0])}`,
+      `Chờ retest ${zoneStr(trigger)} không lấy lại được`,
+      'Không bán đuổi nếu nến phá quá dài, chờ nhịp retest',
+    ];
+    s.entry = `Vùng kích hoạt: Phá ${zoneStr(trigger)}`;
+    s.conditions = 'Điều kiện: ' + s.conditions_list.join('; ') + '.';
+    s.targets = 'Mục tiêu: ' + s.tps.map((t) => t.text).join(' → ');
+    s.invalidation = `Vô hiệu: Giá lấy lại trên ${fmt(trigger[1])}.`;
+    s.note = 'Lưu ý: Chỉ bán khi phá vỡ có xác nhận, tránh bẫy phá giả.';
+    return s;
+  };
+
+  const buyBreak = (no, trigger, headline) => {
+    const s = scenBase(no, 'BUY — PHÁ KHÁNG CỰ', 'BUY', headline || 'BUY BREAKOUT');
+    s.entry_zone = trigger;
+    s.sl_zone = [trigger[0] - buf2, trigger[0] - buf1];
+    s.tps = tpList([R2, R3]);
+    s.tp_ext = [Math.round(R3[0] + atr), Math.round(R3[1] + atr)];
+    s.conditions_list = [
+      `Chờ M15 đóng nến trên ${fmt(trigger[1])}`,
+      `Chờ retest ${zoneStr(trigger)} giữ vững từ trên xuống`,
+      'Không mua đuổi nếu nến phá quá dài, chờ nhịp retest',
+    ];
+    s.entry = `Vùng kích hoạt: Phá ${zoneStr(trigger)}`;
+    s.conditions = 'Điều kiện: ' + s.conditions_list.join('; ') + '.';
+    s.targets = 'Mục tiêu: ' + s.tps.map((t) => t.text).join(' → ');
+    s.invalidation = `Vô hiệu: Giá mất lại dưới ${fmt(trigger[0])}.`;
+    s.note = 'Lưu ý: Chỉ mua khi phá vỡ có xác nhận, tránh bẫy phá giả.';
+    return s;
+  };
+
+  const buyReversal = (no) => {
+    const s = scenBase(no, 'BUY — HỒI KỸ THUẬT (CHỈ KHI CÓ XÁC NHẬN)', 'BUY', 'BUY HỒI KỸ THUẬT');
+    s.entry_zone = S1;
+    s.sl_zone = [S1[0] - buf2, S1[0] - buf1];
+    s.tps = tpList([R1]);
+    s.conditions_list = [
+      'Chỉ xem là nhịp hồi ngắn ngược xu hướng chính',
+      `Giá giữ được hỗ trợ ${zoneStr(S1)}, không thủng sâu hơn`,
+      'M5 có 2 nến đảo chiều tăng liên tiếp',
+      'Đi khối lượng nhỏ, chốt sớm tại kháng cự gần',
+    ];
+    s.entry = `Vùng vào: ${zoneStr(S1)} (chỉ khi có xác nhận)`;
+    s.conditions = 'Điều kiện: ' + s.conditions_list.join('; ') + '.';
+    s.targets = 'Mục tiêu: ' + s.tps.map((t) => t.text).join(' → ');
+    s.invalidation = `Vô hiệu: Nến M15 đóng dưới ${fmt(S1[0])}.`;
+    s.note = 'Lưu ý: Kịch bản ngược xu hướng chính — không có xác nhận thì đứng ngoài.';
+    return s;
+  };
+
+  const sellReversal = (no) => {
+    const s = scenBase(no, 'SELL — HỒI KỸ THUẬT (CHỈ KHI CÓ XÁC NHẬN)', 'SELL', 'SELL HỒI KỸ THUẬT');
+    s.entry_zone = R1;
+    s.sl_zone = [R1[1] + buf1, R1[1] + buf2];
+    s.tps = tpList([S1]);
+    s.conditions_list = [
+      'Chỉ xem là nhịp hồi ngắn ngược xu hướng chính',
+      `Giá bị chặn tại kháng cự ${zoneStr(R1)}, không vượt qua được`,
+      'M5 có 2 nến đảo chiều giảm liên tiếp',
+      'Đi khối lượng nhỏ, chốt sớm tại hỗ trợ gần',
+    ];
+    s.entry = `Vùng vào: ${zoneStr(R1)} (chỉ khi có xác nhận)`;
+    s.conditions = 'Điều kiện: ' + s.conditions_list.join('; ') + '.';
+    s.targets = 'Mục tiêu: ' + s.tps.map((t) => t.text).join(' → ');
+    s.invalidation = `Vô hiệu: Nến M15 đóng trên ${fmt(R1[1])}.`;
+    s.note = 'Lưu ý: Kịch bản ngược xu hướng chính — không có xác nhận thì đứng ngoài.';
+    return s;
+  };
+
+  if (trend === 'GIẢM') {
+    return [sellFade(1, R1, R2, true), sellBreak(2, S1), buyReversal(3)];
+  }
+  if (trend === 'TĂNG') {
+    return [buyFade(1, S1, S2, true), buyBreak(2, R1), sellReversal(3)];
+  }
+  /* ĐI NGANG — ưu tiên cạnh biên gần giá hơn */
+  const dRes = R1[0] - price, dSup = price - S1[1];
+  if (dRes <= dSup) {
+    const s1 = sellFade(1, R1, null, false);
+    s1.title = 'ƯU TIÊN SELL — CẠNH TRÊN BIÊN ĐI NGANG';
+    return [s1, sellBreak(2, S1, 'SELL PHÁ BIÊN DƯỚI'), buyFade(3, S1, S2, false)];
+  }
+  const s1 = buyFade(1, S1, null, false);
+  s1.title = 'ƯU TIÊN BUY — CẠNH DƯỚI BIÊN ĐI NGANG';
+  return [s1, buyBreak(2, R1, 'BUY PHÁ BIÊN TRÊN'), sellFade(3, R1, R2, false)];
+}
+
+
+/* ---------------- session ---------------- */
+function sessionInfo(now = new Date()) {
+  const parts = (tz) => {
+    const p = new Intl.DateTimeFormat('en-GB', {
+      timeZone: tz, hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric', hour12: false,
+    }).formatToParts(now);
+    const g = (t) => p.find((x) => x.type === t).value;
+    return { hh: +g('hour'), mm: g('minute'), date: `${g('day')}/${g('month')}/${g('year')}`, hm: `${g('hour')}:${g('minute')}` };
+  };
+  const jst = parts('Asia/Tokyo');
+  const vn = parts('Asia/Ho_Chi_Minh');
+  let label = 'PHIÊN Á';
+  if (jst.hh >= 22 || jst.hh < 3) label = 'PHIÊN MỸ';
+  else if (jst.hh >= 16) label = 'PHIÊN ÂU';
+  return { label, date: jst.date, time_tokyo: `${jst.hm} JST`, time_vn: vn.hm };
+}
+
+/* ---------------- main ---------------- */
+const toOutCandles = (cs, n) => cs.slice(-n).map((c) => [c.ts, r2(c.o), r2(c.h), r2(c.l), r2(c.c)]);
+
+
+
+const MACRO_LT = {"central_bank_net_buy_tonnes": 289, "central_bank_period": "Q2/2026", "central_bank_yoy_pct": 62, "etf_flow_tonnes": -44.8, "etf_period": "Q2/2026", "headline": "NHTW gom vàng", "source": "World Gold Council", "source_note": "Số quý do WGC công bố, Gol kiểm chứng qua tìm kiếm ngày 28/10/2026. Cập nhật tay khi WGC ra kỳ mới.", "updated": "2026-10-28", "verdict": "ĐỠ GIÁ"};
+let __djCache = null, __djAt = 0;
+async function loadDataJson() {
+  if (__djCache && Date.now() - __djAt < 240000) return __djCache;
+  try {
+    const res = await fetch('data.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    __djCache = await res.json(); __djAt = Date.now();
+    return __djCache;
+  } catch (e) { console.error('[data.json] load failed:', e.message); return __djCache; }
+}
+async function fetchMacro() {
+  const dj = await loadDataJson();
+  if (dj && dj.macro) return dj.macro;
+  return { long_term: MACRO_LT, sources: 'USD/lợi suất: FRED · Dài hạn: World Gold Council', ok: false, stale: false,
+    fetched_at: new Date().toISOString(),
+    short_term: { verdict: 'CHƯA CẬP NHẬT', points: null, usd: null, us10y: null, real10y: null } };
+}
+
+
+async function fetchNews() {
+  const dj = await loadDataJson();
+  if (dj && dj.news) return dj.news;
+  return { ok: false, stale: false, fetched_at: new Date().toISOString(), items: [] };
+}
+
+async function computeData() {
+  const [h1d, m30d, m15d, m5d] = await Promise.all([
+    fetchCandles('H1'), fetchCandles('M30'), fetchCandles('M15'), fetchCandles('M5'),
+  ]);
+  /* Macro strip (fetch_macro never throws: on failure it returns a cached
+   * or "not updated" short-term block plus the static long-term block, so
+   * the poster still renders if FRED is down). */
+  const macroRaw = await fetchMacro();
+  const news = await fetchNews();
+  /* Bitcoin board: keep the short-term USD/yield strip (it moves BTC
+   * too) but drop the gold-specific long-term line (central banks
+   * buying gold tonnes) — it would be misleading on a BTC poster. */
+  const macro = INSTR.key === 'BTC' ? Object.assign({}, macroRaw, { long_term: {} }) : macroRaw;
+  const H = h1d.candles;
+  const n = H.length;
+  const closes = H.map((c) => c.c);
+  const price = closes[n - 1];
+
+  const rsiArr = rsiWilder(closes);
+  const { adx, pDI, mDI } = adxWilder(H);
+  const mc = macd(closes);
+  const ichi = ichimoku(H);
+  const atr = atrWilder(H);
+
+  const last = n - 1;
+  const rsi = rsiArr[last], adxV = adx[last], pdi = pDI[last], mdi = mDI[last];
+  const macdV = mc.line[last], sigV = mc.signal[last], histV = mc.hist[last];
+  const spanANow = ichi.spanAraw[last - 26], spanBNow = ichi.spanBraw[last - 26];
+  const cloudTop = Math.max(spanANow, spanBNow), cloudBot = Math.min(spanANow, spanBNow);
+
+  // trend verdict
+  let score = 0;
+  let cloudFact;
+  if (price > cloudTop) { score += 2; cloudFact = 'Giá trên mây Ichimoku'; }
+  else if (price < cloudBot) { score -= 2; cloudFact = 'Giá dưới mây Ichimoku'; }
+  else cloudFact = 'Giá nằm trong mây Ichimoku';
+  if (rsi > 50) score += 1; else if (rsi < 50) score -= 1;
+  if (histV > 0) score += 1; else if (histV < 0) score -= 1;
+  if (pdi > mdi) score += 1; else if (mdi > pdi) score -= 1;
+  let trend;
+  if (adxV != null && adxV < 20) trend = 'ĐI NGANG';
+  else if (score <= -2) trend = 'GIẢM';
+  else if (score >= 2) trend = 'TĂNG';
+  else trend = 'ĐI NGANG';
+
+  const facts = [
+    cloudFact,
+    `ADX ${adxV.toFixed(2)} (${adxV >= 25 ? 'xu hướng mạnh' : adxV >= 20 ? 'xu hướng đang hình thành' : 'xu hướng yếu'})`,
+    `RSI ${rsi.toFixed(2)} (${rsi >= 50 ? 'trên 50' : 'dưới 50'})`,
+    histV >= 0 ? 'MACD dương, động lượng tăng' : 'MACD âm, động lượng giảm',
+  ];
+
+  const zones = buildZones(H, price, atr);
+
+  // ichimoku arrays aligned to the last 120 output candles
+  const start = n - 120;
+  const aligned = (arr) => arr.slice(start).map((v) => r2(v));
+  const spanAligned = (raw) => {
+    const out = [];
+    for (let i = start; i < n; i++) out.push(i - 26 >= 0 ? r2(raw[i - 26]) : null);
+    return out;
+  };
+
+  const frameData = (data) => {
+    const cs = data.candles, m = cs.length, cl = cs.map((c) => c.c);
+    const r = rsiWilder(cl), a = adxWilder(cs), mcF = macd(cl);
+    const f = {
+      price: r2(cl[m - 1]),
+      rsi: r2(r[m - 1]),
+      adx: r2(a.adx[m - 1]),
+      plus_di: r2(a.pDI[m - 1]),
+      minus_di: r2(a.mDI[m - 1]),
+      macd_hist: r2(mcF.hist[m - 1]),
+    };
+    let sc = 0;
+    if (f.rsi > 50) sc++; else if (f.rsi < 50) sc--;
+    if (f.macd_hist > 0) sc++; else if (f.macd_hist < 0) sc--;
+    if (f.plus_di > f.minus_di) sc++; else if (f.minus_di > f.plus_di) sc--;
+    f.trend = (f.adx != null && f.adx < 15 && Math.abs(sc) < 3) || sc === 0 ? 'ĐI NGANG' : sc > 0 ? 'TĂNG' : 'GIẢM';
+    f.comment = frameComment(f, zones, atr);
+    f.candles = toOutCandles(cs, 60);
+    return { price: f.price, rsi: f.rsi, adx: f.adx, plus_di: f.plus_di, minus_di: f.minus_di, macd_hist: f.macd_hist, trend: f.trend, comment: f.comment, candles: f.candles };
+  };
+
+  /* ---- main chart block: M15 candles + indicator series + trendline ---- */
+  const M15 = m15d.candles, n15 = M15.length, cl15 = M15.map((c) => c.c);
+  const rsi15 = rsiWilder(cl15), adx15 = adxWilder(M15), mc15 = macd(cl15);
+  const atr15 = atrWilder(M15) || atr;
+  const zonesM = buildZones(M15, price, atr15, Math.max(6, 1.6 * atr15));
+  const start15 = n15 - 96;
+  const sliceA = (arr) => arr.slice(start15).map((v) => r2(v));
+  const m15Frame = frameData(m15d);
+  const h1Frame = {
+    price: r2(price), rsi: r2(rsi), adx: r2(adxV), plus_di: r2(pdi), minus_di: r2(mdi),
+    macd_hist: r2(histV), trend, comment: frameComment({ price, rsi, adx: adxV, plus_di: pdi, minus_di: mdi }, zones, atr),
+    candles: toOutCandles(H, 60),
+  };
+  const mainChart = {
+    timeframe: 'M15',
+    candles: toOutCandles(M15, 96),
+    rsi: sliceA(rsi15),
+    adx: sliceA(adx15.adx),
+    macd_hist: sliceA(mc15.hist),
+    macd_line: sliceA(mc15.line),
+    trendline: buildTrendline(M15.slice(start15).map((c) => ({ h: c.h, l: c.l })),
+      trend === 'GIẢM' ? 'down' : trend === 'TĂNG' ? 'up' : 'auto'),
+    trend_m15: m15Frame.trend,
+  };
+
+  const out = {
+    generated_at: new Date().toISOString(),
+    session: sessionInfo(),
+    symbol: INSTR.symbol,
+    instrument: INSTR.key,
+    timeframe_main: 'M15',
+    price: r2(price),
+    source: h1d.source,
+    h1: {
+      trend,
+      facts,
+      indicators: {
+        rsi: r2(rsi), adx: r2(adxV), plus_di: r2(pdi), minus_di: r2(mdi),
+        macd: r2(macdV), macd_signal: r2(sigV), hist: r2(histV),
+      },
+      candles: toOutCandles(H, 120),
+      ichimoku: {
+        tenkan: aligned(ichi.tenkan),
+        kijun: aligned(ichi.kijun),
+        spanA: spanAligned(ichi.spanAraw),
+        spanB: spanAligned(ichi.spanBraw),
+      },
+    },
+    zones: zonesM,
+    zones_h1: zones,
+    main_chart: mainChart,
+    frames: {
+      H1: h1Frame,
+      M30: frameData(m30d),
+      M15: m15Frame,
+      M5: frameData(m5d),
+    },
+    scenarios: buildScenarios(trend, zonesM, atr15, price, { rsi_m15: m15Frame.rsi }),
+    macro,
+    news,
+  };
+
+  return out;
+}
+</script>
+<script>
+"use strict";
+/* ---------- helpers ---------- */
+function fmtInt(v){ return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+function fmtPrice(v){
+  if (v == null || isNaN(v)) return "—";
+  const r = Math.round(v);
+  if (Math.abs(v - r) < 0.005) return fmtInt(r);
+  const s = Math.abs(v).toFixed(2).replace(/0$/, "");
+  const parts = s.split(".");
+  return (v < 0 ? "-" : "") + fmtInt(parseFloat(parts[0])) + "," + parts[1];
+}
+function fmt2(v){ return (v == null || isNaN(v)) ? "—" : Number(v).toFixed(2); }
+function fmtRange(z){ return z ? fmtPrice(z[0]) + " – " + fmtPrice(z[1]) : "—"; }
+function $(id){ return document.getElementById(id); }
+function setupCanvas(cv){
+  const r = cv.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+  const ctx = cv.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { ctx, w: r.width, h: r.height };
+}
+function trendClass(t){ return /GIẢM/.test(t || "") ? "down" : /TĂNG/.test(t || "") ? "up" : "flat"; }
+function trendBadge(t){ return '<span class="tbadge ' + trendClass(t) + '">' + (t || "—") + '</span>'; }
+
+/* ---------- macro strip ---------- */
+function fmtMacroNum(v, dec){
+  if (v == null || isNaN(v)) return "—";
+  return Number(v).toFixed(dec == null ? 2 : dec).replace(".", ",");
+}
+function fmtMacroChg(c){
+  if (c == null || isNaN(c)) return "";
+  const arrow = c > 0 ? "▲" : c < 0 ? "▼" : "→";
+  return arrow + " " + fmtMacroNum(Math.abs(c));
+}
+function fmtMacroDate(iso){
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso || "");
+  return m ? m[3] + "/" + m[2] : "";
+}
+function renderMacro(d){
+  const mac = d.macro || {};
+  const st = mac.short_term || {};
+  const verdict = st.verdict || "CHƯA CẬP NHẬT";
+  const vEl = $("mShortVerdict");
+  vEl.textContent = "NGẮN HẠN: " + verdict + (mac.stale ? " (số gần nhất)" : "");
+  vEl.className = "m-verdict " + (verdict.indexOf("ĐÈ") === 0 ? "press" : verdict.indexOf("ĐỠ") === 0 ? "support" : verdict.indexOf("TRUNG") === 0 ? "neutral" : "na");
+  const item = (s, dec) => s ? '<span class="m-item">' + s.label + " <b>" + fmtMacroNum(s.value, dec) + (s.unit || "") + "</b> " +
+    fmtMacroChg(s.change) + ' <span class="m-date">' + fmtMacroDate(s.date) + "</span></span>" : "";
+  $("mShortItems").innerHTML = [item(st.usd), item(st.us10y), item(st.real10y)].filter(Boolean).join("") ||
+    '<span class="m-item">Vĩ mô ngắn hạn: chưa cập nhật</span>';
+  const lt = mac.long_term || {};
+  if (lt.central_bank_net_buy_tonnes != null){
+    const etf = (lt.etf_flow_tonnes != null)
+      ? " · ETF " + (lt.etf_flow_tonnes < 0 ? "bán " + fmtMacroNum(Math.abs(lt.etf_flow_tonnes), 1) : "mua " + fmtMacroNum(lt.etf_flow_tonnes, 1)) + " tấn"
+      : "";
+    $("mLong").innerHTML = "DÀI HẠN: <b class=\"sup\">" + (lt.verdict || "ĐỠ GIÁ") + "</b> — NHTW mua ròng +" +
+      fmtMacroNum(lt.central_bank_net_buy_tonnes, 0) + " tấn " + (lt.central_bank_period || "") +
+      " (+" + fmtMacroNum(lt.central_bank_yoy_pct, 0) + "%)" + etf + " · " + ((lt.source || "WGC").replace("World Gold Council", "WGC"));
+  } else { $("mLong").textContent = ""; }
+}
+
+/* ---------- frames strip ---------- */
+function drawMini(cv, candles, price){
+  const { ctx, w, h } = setupCanvas(cv);
+  if (!candles || !candles.length) return;
+  let mn = Infinity, mx = -Infinity;
+  candles.forEach(c => { mn = Math.min(mn, c[3]); mx = Math.max(mx, c[2]); });
+  if (price != null){ mn = Math.min(mn, price); mx = Math.max(mx, price); }
+  const pad = (mx - mn) * 0.08 || 1; mn -= pad; mx += pad;
+  const Y = p => (mx - p) / (mx - mn) * h;
+  const n = candles.length, step = w / n, bw = Math.max(1.5, step * 0.6);
+  ctx.strokeStyle = "rgba(255,255,255,.06)";
+  for (let i = 1; i <= 2; i++){ const y = h * i / 3; ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
+  candles.forEach((c, i) => {
+    const up = c[4] >= c[1], col = up ? "#26a69a" : "#ef5350", x = i * step + step / 2;
+    ctx.strokeStyle = col; ctx.fillStyle = col;
+    ctx.beginPath(); ctx.moveTo(x, Y(c[2])); ctx.lineTo(x, Y(c[3])); ctx.stroke();
+    const t = Y(Math.max(c[1], c[4])), b = Y(Math.min(c[1], c[4]));
+    ctx.fillRect(x - bw / 2, t, bw, Math.max(1, b - t));
+  });
+  if (price != null){
+    ctx.strokeStyle = "rgba(232,199,102,.7)"; ctx.setLineDash([4, 3]);
+    ctx.beginPath(); ctx.moveTo(0, Y(price)); ctx.lineTo(w, Y(price)); ctx.stroke(); ctx.setLineDash([]);
+  }
+}
+function renderFrames(d){
+  const fr = $("framesRow"); fr.innerHTML = "";
+  ["H1", "M30", "M15", "M5"].forEach(tf => {
+    const f = (d.frames || {})[tf]; if (!f) return;
+    const div = document.createElement("div"); div.className = "panel frame";
+    div.innerHTML =
+      '<div class="fh"><span class="tf">' + tf + '</span>' + trendBadge(f.trend) +
+      '<span class="fp">Giá: ' + fmtPrice(f.price) + '</span></div>' +
+      '<canvas></canvas>' +
+      '<div class="stats"><span>RSI <b>' + fmt2(f.rsi) + '</b></span>' +
+      '<span>ADX <b>' + fmt2(f.adx) + '</b></span>' +
+      '<span>MACD <b>' + fmt2(f.macd_hist) + '</b></span></div>';
+    fr.appendChild(div);
+    drawMini(div.querySelector("canvas"), f.candles, f.price);
+  });
+}
+
+/* ---------- main chart (M15) ---------- */
+function zoneLists(d){
+  const z = d.zones || {};
+  const res = (z.res_list && z.res_list.length) ? z.res_list : [z.res_mid, z.res_strong, z.res_far].filter(Boolean);
+  const sup = (z.sup_list && z.sup_list.length) ? z.sup_list : [z.sup_near, z.sup_strong, z.sup_far].filter(Boolean);
+  return { res, sup };
+}
+const RES_NAMES = ["Kháng cự gần", "Kháng cự trung gian", "Kháng cự mạnh"];
+const SUP_NAMES = ["Hỗ trợ gần", "Hỗ trợ tiếp theo", "Hỗ trợ sâu"];
+
+function drawMain(d){
+  const { ctx, w, h } = setupCanvas($("mainChart"));
+  const mc = d.main_chart || {};
+  const candles = mc.candles || (d.h1 && d.h1.candles) || [];
+  const axisW = 74, plotW = w - axisW, plotH = h;
+  const { res, sup } = zoneLists(d);
+  let mn = Infinity, mx = -Infinity;
+  const eat = v => { if (v != null && isFinite(v)) { if (v < mn) mn = v; if (v > mx) mx = v; } };
+  candles.forEach(c => { eat(c[2]); eat(c[3]); });
+  res.forEach(z => { eat(z[0]); eat(z[1]); });
+  sup.forEach(z => { eat(z[0]); eat(z[1]); });
+  eat(d.price);
+  if (!isFinite(mn)) { mn = 0; mx = 1; }
+  const pad = (mx - mn) * 0.05; mn -= pad; mx += pad;
+  const padT = 6, padB = 10;
+  const Y = p => padT + (mx - p) / (mx - mn) * (plotH - padT - padB);
+  const n = candles.length, step = plotW / Math.max(n, 1), bw = Math.max(2, step * 0.62);
+  const X = i => i * step + step / 2;
+
+  /* grid + axis */
+  ctx.font = "12px 'Noto Sans','DejaVu Sans',sans-serif";
+  for (let i = 0; i <= 5; i++){
+    const p = mn + (mx - mn) * i / 5, y = Y(p);
+    ctx.strokeStyle = "rgba(255,255,255,.07)"; ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(plotW, y); ctx.stroke();
+    ctx.fillStyle = "#9a978c"; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+    ctx.fillText(fmtInt(p), plotW + 8, y);
+  }
+  ctx.textBaseline = "alphabetic";
+
+  /* zone bands + right-side labels (de-collided) */
+  const labels = [];
+  const band = (z, rgba) => {
+    const y1 = Y(z[1]), y2 = Y(z[0]);
+    ctx.fillStyle = rgba + "0.16)"; ctx.fillRect(0, y1, plotW, Math.max(2, y2 - y1));
+    ctx.fillStyle = rgba + "0.55)";
+    ctx.fillRect(0, y1, plotW, 1); ctx.fillRect(0, Math.max(y1, y2 - 1), plotW, 1);
+    return (y1 + y2) / 2;
+  };
+  res.forEach((z, i) => labels.push({ text: fmtRange(z) + "  " + (RES_NAMES[i] || "Kháng cự"), cy: band(z, "rgba(229,72,77,"), col: "#ff9d9d", rgba: "rgba(229,72,77," }));
+  sup.forEach((z, i) => labels.push({ text: fmtRange(z) + "  " + (SUP_NAMES[i] || "Hỗ trợ"), cy: band(z, "rgba(38,190,133,"), col: "#7fe3bb", rgba: "rgba(38,190,133," }));
+
+  /* candles */
+  candles.forEach((c, i) => {
+    const up = c[4] >= c[1], col = up ? "#26a69a" : "#ef5350", x = X(i);
+    ctx.strokeStyle = col; ctx.fillStyle = col;
+    ctx.beginPath(); ctx.moveTo(x, Y(c[2])); ctx.lineTo(x, Y(c[3])); ctx.stroke();
+    const t = Y(Math.max(c[1], c[4])), b = Y(Math.min(c[1], c[4]));
+    ctx.fillRect(x - bw / 2, t, bw, Math.max(1, b - t));
+  });
+
+  /* trendline */
+  const tl = mc.trendline;
+  if (tl && tl.a && tl.b && tl.b.i > tl.a.i){
+    const slope = (tl.b.p - tl.a.p) / (tl.b.i - tl.a.i);
+    const x1 = X(tl.a.i), y1 = Y(tl.a.p);
+    const x2 = plotW - 4, y2 = Y(tl.a.p + slope * ((x2 / step) - 0.5 - tl.a.i));
+    ctx.strokeStyle = "rgba(255,170,60,.95)"; ctx.lineWidth = 2.2;
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); ctx.lineWidth = 1;
+    const lx = x1 + (x2 - x1) * 0.52, ly = y1 + (y2 - y1) * 0.52;
+    ctx.save();
+    ctx.translate(lx, ly); ctx.rotate(Math.atan2(y2 - y1, x2 - x1));
+    ctx.font = "700 13.5px 'Noto Sans','DejaVu Sans',sans-serif";
+    ctx.fillStyle = "#ffb35c"; ctx.textAlign = "center";
+    ctx.fillText(tl.kind === "down" ? "Xu hướng giảm" : "Xu hướng tăng", 0, -7);
+    ctx.restore();
+  }
+
+  /* zone labels: chips pinned to the RIGHT inside the plot, de-collided */
+  if (labels.length){
+    ctx.font = "700 12.5px 'Noto Sans','DejaVu Sans',sans-serif";
+    const chipH = 19, gap = 3;
+    labels.forEach(L => { L.w = ctx.measureText(L.text).width + 14; L.top = L.cy - chipH / 2; });
+    labels.sort((a, b) => a.top - b.top);
+    for (let i = 0; i < labels.length; i++){
+      const minTop = i === 0 ? 4 : labels[i - 1].top + chipH + gap;
+      if (labels[i].top < minTop) labels[i].top = minTop;
+    }
+    for (let i = labels.length - 1; i >= 0; i--){
+      const maxTop = i === labels.length - 1 ? plotH - 4 - chipH : labels[i + 1].top - chipH - gap;
+      if (labels[i].top > maxTop) labels[i].top = maxTop;
+    }
+    labels.forEach(L => {
+      const x = plotW - L.w - 8;
+      ctx.beginPath(); ctx.roundRect(x, L.top, L.w, chipH, 4);
+      ctx.fillStyle = "rgba(6,8,7,.8)"; ctx.fill();
+      ctx.strokeStyle = L.rgba + "0.6)"; ctx.stroke();
+      ctx.fillStyle = L.col; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+      ctx.fillText(L.text, x + 7, L.top + chipH / 2 + 0.5);
+    });
+    ctx.textBaseline = "alphabetic";
+  }
+
+  /* current price */
+  if (d.price != null){
+    const y = Y(d.price);
+    ctx.strokeStyle = "rgba(232,199,102,.85)"; ctx.setLineDash([6, 4]);
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(plotW, y); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = "#e8c766";
+    const tw = axisW - 6, th = 20, tx = plotW + 3, ty = Math.min(Math.max(y - th / 2, 2), plotH - th - 2);
+    ctx.beginPath(); ctx.roundRect(tx, ty, tw, th, 4); ctx.fill();
+    ctx.fillStyle = "#221a02"; ctx.font = "800 13.5px 'Noto Sans','DejaVu Sans',sans-serif"; ctx.textAlign = "center";
+    ctx.fillText(fmtPrice(d.price), tx + tw / 2, ty + th / 2 + 4.5);
+  }
+  return { candles };
+}
+
+/* ---------- sub-indicators (RSI / ADX / MACD of M15) ---------- */
+function drawSub(d){
+  const cv = $("subChart"); if (!cv) return;
+  const { ctx, w, h } = setupCanvas(cv);
+  const mc = d.main_chart || {};
+  const rsi = mc.rsi || [], adx = mc.adx || [], hist = mc.macd_hist || [], line = mc.macd_line || [];
+  if (!rsi.length && !adx.length && !hist.length) return;
+  const axisW = 74, plotW = w - axisW;
+  const strips = [
+    { name: "RSI(14)", val: rsi[rsi.length - 1], data: rsi, min: 0, max: 100, col: "#b39ddb", guides: [30, 70] },
+    { name: "ADX(14)", val: adx[adx.length - 1], data: adx, min: 0, max: 60, col: "#7ec3ea", guides: [25] },
+    { name: "MACD(12,26,9)", val: hist[hist.length - 1], data: line.length ? line : hist, hist: hist, col: "#e8c766", guides: [] },
+  ];
+  const sh = h / 3;
+  ctx.font = "11.5px 'Noto Sans','DejaVu Sans',sans-serif";
+  strips.forEach((s, si) => {
+    const top = si * sh, bot = top + sh - 4;
+    ctx.strokeStyle = "rgba(255,255,255,.08)";
+    ctx.beginPath(); ctx.moveTo(0, bot + 2); ctx.lineTo(plotW, bot + 2); ctx.stroke();
+    let mn = s.min, mx = s.max;
+    if (s.name.indexOf("MACD") === 0){
+      const all = (s.hist || []).concat(s.data || []).filter(v => v != null);
+      const m = Math.max(1, ...all.map(v => Math.abs(v))) * 1.15;
+      mn = -m; mx = m;
+    }
+    const Y = v => top + (mx - v) / (mx - mn) * (bot - top);
+    const n = Math.max(s.data.length, (s.hist || []).length, 1), step = plotW / n;
+    (s.guides || []).forEach(g => {
+      ctx.strokeStyle = "rgba(255,255,255,.16)"; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(0, Y(g)); ctx.lineTo(plotW, Y(g)); ctx.stroke(); ctx.setLineDash([]);
+    });
+    if (s.hist){
+      s.hist.forEach((v, i) => {
+        if (v == null) return;
+        ctx.fillStyle = v >= 0 ? "rgba(38,166,154,.75)" : "rgba(239,83,80,.75)";
+        const y0 = Y(0), yv = Y(v);
+        ctx.fillRect(i * step + step * 0.2, Math.min(y0, yv), Math.max(1.5, step * 0.6), Math.max(1, Math.abs(yv - y0)));
+      });
+    }
+    ctx.strokeStyle = s.col; ctx.lineWidth = 1.4; ctx.beginPath();
+    let started = false;
+    s.data.forEach((v, i) => {
+      if (v == null) { started = false; return; }
+      const x = i * step + step / 2, y = Y(v);
+      started ? ctx.lineTo(x, y) : ctx.moveTo(x, y); started = true;
+    });
+    ctx.stroke(); ctx.lineWidth = 1;
+    ctx.fillStyle = "#c9c4b2"; ctx.textAlign = "left"; ctx.textBaseline = "top";
+    ctx.fillText(s.name + "  " + fmt2(s.val), 6, top + 3);
+    ctx.fillStyle = "#9a978c"; ctx.textAlign = "left";
+    ctx.fillText(fmt2(mx), plotW + 8, top + 1);
+    ctx.textBaseline = "alphabetic";
+  });
+}
+
+/* ---------- session timeline ---------- */
+function drawTimeline(d){
+  const cv = $("tlChart"); if (!cv) return;
+  const { ctx, w, h } = setupCanvas(cv);
+  const mc = d.main_chart || {};
+  const candles = mc.candles || [];
+  if (!candles.length) return;
+  const hourJst = ts => {
+    const p = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", hour12: false }).format(new Date(ts));
+    return parseInt(p, 10) % 24;
+  };
+  const sessOf = hh => (hh >= 22 || hh < 3) ? "Mỹ" : hh >= 16 ? "Âu" : "Á";
+  const cols = { "Á": "#274b63", "Âu": "#5d4a1f", "Mỹ": "#4a2d55" };
+  const ranges = { "Á": "03:00 – 16:00", "Âu": "16:00 – 22:00", "Mỹ": "22:00 – 03:00" };
+  const n = candles.length, step = w / n;
+  let cur = null, startI = 0;
+  const segs = [];
+  candles.forEach((c, i) => {
+    const s = sessOf(hourJst(c[0]));
+    if (s !== cur){ if (cur) segs.push({ s: cur, a: startI, b: i }); cur = s; startI = i; }
+  });
+  if (cur) segs.push({ s: cur, a: startI, b: n });
+  ctx.font = "700 11.5px 'Noto Sans','DejaVu Sans',sans-serif";
+  segs.forEach(sg => {
+    const x = sg.a * step, ww = (sg.b - sg.a) * step;
+    ctx.fillStyle = cols[sg.s]; ctx.fillRect(x, 0, Math.max(0, ww - 1), h);
+    const label = "Phiên " + sg.s + " (" + ranges[sg.s] + ")";
+    if (ww > 130){
+      ctx.fillStyle = "#e9e6da"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(label, x + ww / 2, h / 2 + 0.5);
+    }
+  });
+  ctx.textBaseline = "alphabetic";
+}
+
+/* ---------- right column ---------- */
+function stripLbl(t, lbl){ return (t || "").replace(new RegExp("^\\s*" + lbl + "\\s*:?\\s*", "i"), ""); }
+function renderStrategy(d){
+  const box = $("strategyBox");
+  const s = (d.scenarios || [])[0];
+  if (!s){ box.innerHTML = '<div class="st-title">CHIẾN LƯỢC ƯU TIÊN</div><div class="fallback">Chưa có kịch bản.</div>'; return; }
+  const side = (s.side || "SELL").toUpperCase() === "BUY" ? "buy" : "sell";
+  const arrow = side === "buy" ? "▲" : "▼";
+  let html = '<div class="st-head"><span class="st-title">CHIẾN LƯỢC ƯU TIÊN</span>' +
+    '<span style="font-size:12px;color:#a9a48f;">H1: ' + ((d.h1 && d.h1.trend) || "—") + '</span></div>';
+  html += '<div class="headline ' + side + '">' + arrow + " " + (s.headline || s.title || "") + "</div>";
+  if (s.entry_zone){
+    html += '<div class="ez"><span class="lbl">Vùng vào lệnh</span><span class="val">' + fmtRange(s.entry_zone) + "</span>" +
+      (s.entry_alt_zone ? '<span class="alt">Tốt hơn: <b>' + fmtRange(s.entry_alt_zone) + "</b></span>" : "") + "</div>";
+  } else if (s.entry){
+    html += '<div class="ez"><span class="val" style="font-size:17px;">' + stripLbl(s.entry, "Vùng vào") + "</span></div>";
+  }
+  const conds = (s.conditions_list && s.conditions_list.length) ? s.conditions_list
+    : [stripLbl(s.conditions, "Điều kiện")].filter(Boolean);
+  if (conds.length){
+    html += '<div class="conds"><div class="cl">ĐIỀU KIỆN</div><ul>' +
+      conds.slice(0, 4).map(c => "<li>" + c + "</li>").join("") + "</ul></div>";
+  }
+  const tps = s.tps || [];
+  if (tps.length || s.tp_ext){
+    html += '<div class="tps">';
+    tps.slice(0, 3).forEach(t => {
+      html += '<div class="tp' + (side === "sell" ? "" : "") + '"><span class="k">' + t.label + '</span><span class="v">' + (t.text || fmtRange(t.zone)) + "</span></div>";
+    });
+    if (s.tp_ext) html += '<div class="tp ext"><span class="k">TP MỞ RỘNG</span><span class="v">' + fmtRange(s.tp_ext) + "</span></div>";
+    html += "</div>";
+  } else if (s.targets){
+    html += '<div class="fallback" style="margin-top:7px;"><b>Mục tiêu:</b> ' + stripLbl(s.targets, "Mục tiêu") + "</div>";
+  }
+  if (s.sl_zone){
+    html += '<div class="sl"><span class="k">SL THAM KHẢO</span><span class="v">' + fmtRange(s.sl_zone) + "</span></div>";
+  } else if (s.invalidation){
+    html += '<div class="fallback" style="margin-top:6px;"><b>Vô hiệu:</b> ' + stripLbl(s.invalidation, "Vô hiệu") + "</div>";
+  }
+  box.innerHTML = html;
+}
+function renderScen(elId, s){
+  const box = $(elId);
+  if (!s){ box.style.display = "none"; return; }
+  const side = (s.side || "SELL").toUpperCase() === "BUY" ? "buy" : "sell";
+  box.className = "panel scen " + side;
+  let body = "";
+  if (s.entry) body += '<div class="sl2"><b>' + stripLbl(s.entry, "Vùng vào") + "</b></div>";
+  const conds = (s.conditions_list && s.conditions_list.length) ? s.conditions_list.slice(0, 2)
+    : [stripLbl(s.conditions, "Điều kiện")].filter(Boolean);
+  conds.forEach(c => { body += '<div class="sl2">• ' + (c.length > 84 ? c.slice(0, 83) + "…" : c) + "</div>"; });
+  if (s.targets) body += '<div class="sl2"><b>TP:</b> ' + stripLbl(s.targets, "Mục tiêu") + "</div>";
+  box.innerHTML = '<div class="sh">⚠ KỊCH BẢN ' + s.no + ": " + (s.headline || s.title || "") + "</div>" + body;
+}
+function renderNews(d){
+  const box = $("newsBox");
+  const items = (d.news && d.news.items) || [];
+  let html = '<div class="nh">🕐 LỊCH TIN CẦN CHÚ Ý (GIỜ TOKYO)</div>';
+  if (!items.length){
+    html += '<div class="empty">Không có tin lớn của Mỹ/EU trong 16 giờ tới.</div>';
+  } else {
+    items.slice(0, 4).forEach(it => {
+      html += '<div class="nr"><span class="nt">' + it.time_jst + '</span><span class="dot" style="color:' +
+        (it.impact === "high" ? "#ff8f8f" : "#e8c766") + '">●</span><span>' + it.title + "</span></div>";
+    });
+  }
+  box.innerHTML = html;
+}
+
+/* ---------- render ---------- */
+function render(d){
+  $("symTitle").textContent = d.symbol || "XAUUSD";
+  const s = d.session || {};
+  $("sessLabel").textContent = s.label || "";
+  $("sessDate").textContent = s.date || "";
+  $("timeTokyo").textContent = "Tokyo: " + (s.time_tokyo || "—");
+  $("timeVn").textContent = "VN: " + (s.time_vn || "—");
+  $("priceBig").textContent = fmtPrice(d.price);
+  renderMacro(d);
+  renderFrames(d);
+
+  const h1trend = (d.h1 && d.h1.trend) || "—";
+  const badge = $("h1Badge");
+  badge.textContent = "H1: " + h1trend;
+  badge.className = "tbadge " + trendClass(h1trend);
+  $("h1Facts").textContent = ((d.h1 && d.h1.facts) || []).join(" · ");
+  $("chartTitle").textContent = (d.symbol || "XAUUSD") + " - " + ((d.main_chart && d.main_chart.timeframe) || d.timeframe_main || "M15");
+
+  drawMain(d);
+  drawSub(d);
+  drawTimeline(d);
+  renderStrategy(d);
+  renderScen("scen2Box", (d.scenarios || [])[1]);
+  renderScen("scen3Box", (d.scenarios || [])[2]);
+  renderNews(d);
+
+  let upd = d.generated_at || "—";
+  try {
+    const dt = new Date(d.generated_at);
+    if (!isNaN(dt)) upd = new Intl.DateTimeFormat("vi-VN", { timeZone: "Asia/Tokyo", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).format(dt) + " JST";
+  } catch (e) {}
+  $("srcLine").textContent = "Dữ liệu: " + (d.source || "—") + " · Cập nhật: " + upd + " · Lịch tin: TradingView";
+}
+
+/* ---------- timeframe switching for the main chart ----------
+ * Chips 1P/5P/15P/30P/1H switch the main chart's candles, its
+ * RSI/ADX/MACD subpanels and its trendline. The zones drawn stay the
+ * M15 strategy zones (price levels are timeframe-independent and must
+ * match the strategy column); the strategy column itself is unchanged. */
+let chartTF = 'M15';
+const TF_SPEC = {
+  M1:  { bybit: '1',  okx: '1m',  bucket: 60000 },
+  M5:  { bybit: '5',  okx: '5m',  bucket: 300000 },
+  M15: { bybit: '15', okx: '15m', bucket: 900000 },
+  M30: { bybit: '30', okx: '30m', bucket: 1800000 },
+  H1:  { bybit: '60', okx: '1H',  bucket: 3600000 },
+};
+async function fetchRawTF(tf){
+  const spec = TF_SPEC[tf];
+  try {
+    const c = await fetchBybit(spec.bybit, 1000);
+    if (c.length >= 150) return c;
+    throw new Error('few candles');
+  } catch (e) {
+    const c = await fetchOkx(spec.okx, 300);
+    if (c.length < 100) throw new Error('OKX few candles for ' + tf);
+    return c;
+  }
+}
+async function buildChartBlock(tf){
+  const cs = await fetchRawTF(tf);
+  const n = cs.length, cl = cs.map(c => c.c);
+  const rA = rsiWilder(cl), aA = adxWilder(cs), mA = macd(cl);
+  const last = n - 1;
+  let sc = 0;
+  if (rA[last] > 50) sc++; else if (rA[last] < 50) sc--;
+  if (mA.hist[last] > 0) sc++; else if (mA.hist[last] < 0) sc--;
+  if (aA.pDI[last] > aA.mDI[last]) sc++; else if (aA.mDI[last] > aA.pDI[last]) sc--;
+  const trend = (aA.adx[last] != null && aA.adx[last] < 15 && Math.abs(sc) < 3) || sc === 0 ? 'ĐI NGANG' : sc > 0 ? 'TĂNG' : 'GIẢM';
+  const start = n - 96;
+  const sliceA = arr => arr.slice(start).map(v => r2(v));
+  return {
+    timeframe: tf,
+    candles: toOutCandles(cs, 96),
+    rsi: sliceA(rA), adx: sliceA(aA.adx), macd_hist: sliceA(mA.hist), macd_line: sliceA(mA.line),
+    trendline: buildTrendline(cs.slice(start).map(c => ({ h: c.h, l: c.l })), trend === 'GIẢM' ? 'down' : trend === 'TĂNG' ? 'up' : 'auto'),
+    trend_m15: trend,
+  };
+}
+let __curBlock = null;
+function drawChartCurrent(){
+  const d = window.__LIVE_DATA__; if (!d) return;
+  const block = chartTF === 'M15' ? (d.main_chart || __curBlock) : __curBlock;
+  if (!block) return;
+  const view = Object.assign({}, d, { main_chart: block });
+  drawMain(view); drawSub(view); drawTimeline(view);
+  $("chartTitle").textContent = (d.symbol || "XAUUSD") + " - " + block.timeframe;
+  document.querySelectorAll('#tfChips button').forEach(b => {
+    b.classList.toggle('on', b.dataset.tf === chartTF);
+  });
+}
+async function showTF(tf){
+  chartTF = tf;
+  if (tf === 'M15') { __curBlock = null; drawChartCurrent(); return; }
+  try {
+    __curBlock = await buildChartBlock(tf);
+    if (chartTF === tf) drawChartCurrent();
+  } catch (e) { console.error('TF fetch failed:', e.message); }
+}
+document.addEventListener('click', (ev) => {
+  const b = ev.target.closest && ev.target.closest('#tfChips button');
+  if (b) showTF(b.dataset.tf);
+});
+
+/* ---------- instrument switching: VÀNG / BITCOIN ----------
+ * Default: the user's saved choice; with no saved choice, weekends
+ * (Sat + Sun, Asia/Tokyo — gold market closed, it does not update)
+ * open on Bitcoin, weekdays open on gold.
+ * The choice is saved, so a manual tap wins over the weekend default. */
+let boardInstr = 'XAU';
+try {
+  const saved = localStorage.getItem('boardInstr');
+  if (saved === 'BTC' || saved === 'XAU') boardInstr = saved;
+  else {
+    const dow = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Tokyo', weekday: 'short' }).format(new Date());
+    if (dow === 'Sun' || dow === 'Sat') boardInstr = 'BTC';
+  }
+} catch (e) {}
+setInstrument(boardInstr);
+function paintSymChips(){
+  document.querySelectorAll('#symChips button').forEach(b => b.classList.toggle('on', b.dataset.sym === boardInstr));
+}
+async function switchInstrument(key){
+  if (key === boardInstr && window.__LIVE_DATA__) { paintSymChips(); return; }
+  boardInstr = key;
+  try { localStorage.setItem('boardInstr', key); } catch (e) {}
+  setInstrument(key);
+  paintSymChips();
+  window.__LIVE_DATA__ = null; __curBlock = null; __tickPrice = null; __tickDirty = false; __liveOk = 0;
+  restartWS();
+  setLiveStatus('Đang chuyển sang ' + (key === 'BTC' ? 'Bitcoin…' : 'Vàng…'));
+  __liveCount = 60;
+  await computeAndRender();
+}
+document.addEventListener('click', (ev) => {
+  const b = ev.target.closest && ev.target.closest('#symChips button');
+  if (b) switchInstrument(b.dataset.sym);
+});
+
+/* ---------- live boot ---------- */
+let __liveBusy = false, __liveCount = 60, __liveOk = 0;
+function setLiveStatus(t){ const el = $("liveStatus"); if (el) el.textContent = t; }
+function timeNowJst(){
+  return new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(new Date());
+}
+async function computeAndRender(){
+  if (__liveBusy) return;
+  __liveBusy = true; setLiveStatus("Đang cập nhật…");
+  try {
+    const data = await computeData();
+    window.__LIVE_DATA__ = data;
+    render(data);
+    if (chartTF !== 'M15') {
+      try { __curBlock = await buildChartBlock(chartTF); } catch (e) { console.error('TF refresh failed:', e.message); }
+      drawChartCurrent();
+    }
+    __liveOk++; window.__LIVE_OK__ = __liveOk;
+    __liveCount = 60;
+    setLiveStatus("LIVE · cập nhật " + timeNowJst() + " JST · lần tới sau 60s");
+  } catch (e) {
+    console.error("compute failed:", e);
+    setLiveStatus("Lỗi cập nhật: " + e.message + " · sẽ thử lại sau 60s");
+    __liveCount = 60;
+  }
+  __liveBusy = false;
+}
+/* ---------- realtime tick stream (Bybit WS, fallback OKX WS) ----------
+ * Candles/indicators are still fully recomputed every 60s from REST
+ * klines; between recomputes the websocket patches the last candle of
+ * each series and the headline price so the board moves like a live
+ * chart. If both streams fail, the 60s REST refresh keeps working. */
+let __wsOn = false, __tickPrice = null, __tickDirty = false;
+function patchLast(candles, price, bucketMs){
+  if (!candles || !candles.length) return;
+  const last = candles[candles.length - 1];
+  if (Math.floor(Date.now() / bucketMs) * bucketMs !== last[0]) return; /* new bucket: next recompute adds it */
+  last[4] = price;
+  if (price > last[2]) last[2] = price;
+  if (price < last[3]) last[3] = price;
+}
+function applyTick(price){
+  __tickPrice = price; __tickDirty = true;
+}
+setInterval(() => {
+  if (!__tickDirty || __liveBusy || !window.__LIVE_DATA__) return;
+  __tickDirty = false;
+  const d = window.__LIVE_DATA__, p = __tickPrice;
+  d.price = p;
+  if (d.main_chart) patchLast(d.main_chart.candles, p, 900000);
+  if (d.h1) patchLast(d.h1.candles, p, 3600000);
+  const bk = { H1: 3600000, M30: 1800000, M15: 900000, M5: 300000 };
+  Object.keys(bk).forEach(tf => {
+    const f = (d.frames || {})[tf];
+    if (f) { f.price = p; patchLast(f.candles, p, bk[tf]); }
+  });
+  if (__curBlock && chartTF !== 'M15') patchLast(__curBlock.candles, p, TF_SPEC[chartTF].bucket);
+  render(d);
+  if (chartTF !== 'M15') drawChartCurrent();
+}, 1000);
+let __ws = null, __wsPing = null, __wsGen = 0;
+function stopWS(){
+  __wsGen++;
+  if (__wsPing) { clearInterval(__wsPing); __wsPing = null; }
+  if (__ws) { try { __ws.onclose = null; __ws.close(); } catch (e) {} __ws = null; }
+  __wsOn = false; window.__WS_ON__ = false;
+}
+function restartWS(){ stopWS(); startBybitWS(); }
+function startBybitWS(){
+  const gen = __wsGen, topic = 'kline.1.' + INSTR.bybit;
+  let ws;
+  try { ws = new WebSocket('wss://stream.bybit.com/v5/public/linear'); } catch (e) { return false; }
+  __ws = ws;
+  __wsPing = setInterval(() => { try { ws.send(JSON.stringify({ op: 'ping' })); } catch (e) {} }, 20000);
+  ws.onopen = () => { if (gen === __wsGen) ws.send(JSON.stringify({ op: 'subscribe', args: [topic] })); };
+  ws.onmessage = (ev) => {
+    if (gen !== __wsGen) return;
+    try {
+      const m = JSON.parse(ev.data);
+      if (m.topic === topic && Array.isArray(m.data) && m.data.length) {
+        const c = parseFloat(m.data[m.data.length - 1].close);
+        if (isFinite(c)) { __wsOn = true; window.__WS_ON__ = true; applyTick(c); }
+      }
+    } catch (e) {}
+  };
+  ws.onclose = () => { if (__wsPing) { clearInterval(__wsPing); __wsPing = null; } if (gen !== __wsGen) return; __wsOn = false; window.__WS_ON__ = false; setTimeout(() => { if (gen === __wsGen) startOkxWS(); }, 3000); };
+  ws.onerror = () => { try { ws.close(); } catch (e) {} };
+  return true;
+}
+function startOkxWS(){
+  const gen = __wsGen, inst = INSTR.okx;
+  let ws;
+  try { ws = new WebSocket('wss://ws.okx.com:8443/ws/v5/public'); } catch (e) { return; }
+  __ws = ws;
+  __wsPing = setInterval(() => { try { ws.send('ping'); } catch (e) {} }, 25000);
+  ws.onopen = () => { if (gen === __wsGen) ws.send(JSON.stringify({ op: 'subscribe', args: [{ channel: 'tickers', instId: inst }] })); };
+  ws.onmessage = (ev) => {
+    if (gen !== __wsGen) return;
+    try {
+      const m = JSON.parse(ev.data);
+      if (m.data && m.data.length && m.data[0].last) {
+        const c = parseFloat(m.data[0].last);
+        if (isFinite(c)) { __wsOn = true; window.__WS_ON__ = true; applyTick(c); }
+      }
+    } catch (e) {}
+  };
+  ws.onclose = () => { if (__wsPing) { clearInterval(__wsPing); __wsPing = null; } if (gen !== __wsGen) return; __wsOn = false; window.__WS_ON__ = false; setTimeout(() => { if (gen === __wsGen) startBybitWS(); }, 5000); };
+  ws.onerror = () => { try { ws.close(); } catch (e) {} };
+}
+function fitBoard(){
+  const s = Math.min(1, window.innerWidth / 1560);
+  document.documentElement.style.zoom = s;
+}
+window.addEventListener("resize", fitBoard);
+(async function(){
+  fitBoard();
+  paintSymChips();
+  startBybitWS();
+  await computeAndRender();
+  try { await document.fonts.ready; } catch (e) {}
+  requestAnimationFrame(() => { window.__POSTER_READY__ = true; });
+  setInterval(() => {
+    if (__liveBusy) return;
+    __liveCount--;
+    if (__liveCount <= 0) { computeAndRender(); }
+    else if (__liveOk) setLiveStatus("LIVE" + (__wsOn ? " · giá trực tiếp" : "") + " · cập nhật " + timeNowJst().slice(0, 5) + " JST · lần tới sau " + __liveCount + "s");
+  }, 1000);
+})();
+</script>
+</body>
+</html>
