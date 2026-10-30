@@ -1271,6 +1271,72 @@ async function computeAndRender(){
   }
   __liveBusy = false;
 }
+/* ---------- realtime tick stream (Bybit WS, fallback OKX WS) ----------
+ * Candles/indicators are still fully recomputed every 60s from REST
+ * klines; between recomputes the websocket patches the last candle of
+ * each series and the headline price so the board moves like a live
+ * chart. If both streams fail, the 60s REST refresh keeps working. */
+let __wsOn = false, __tickPrice = null, __tickDirty = false;
+function patchLast(candles, price, bucketMs){
+  if (!candles || !candles.length) return;
+  const last = candles[candles.length - 1];
+  if (Math.floor(Date.now() / bucketMs) * bucketMs !== last[0]) return; /* new bucket: next recompute adds it */
+  last[4] = price;
+  if (price > last[2]) last[2] = price;
+  if (price < last[3]) last[3] = price;
+}
+function applyTick(price){
+  __tickPrice = price; __tickDirty = true;
+}
+setInterval(() => {
+  if (!__tickDirty || __liveBusy || !window.__LIVE_DATA__) return;
+  __tickDirty = false;
+  const d = window.__LIVE_DATA__, p = __tickPrice;
+  d.price = p;
+  if (d.main_chart) patchLast(d.main_chart.candles, p, 900000);
+  if (d.h1) patchLast(d.h1.candles, p, 3600000);
+  const bk = { H1: 3600000, M30: 1800000, M15: 900000, M5: 300000 };
+  Object.keys(bk).forEach(tf => {
+    const f = (d.frames || {})[tf];
+    if (f) { f.price = p; patchLast(f.candles, p, bk[tf]); }
+  });
+  render(d);
+}, 1000);
+function startBybitWS(){
+  let ws;
+  try { ws = new WebSocket('wss://stream.bybit.com/v5/public/linear'); } catch (e) { return false; }
+  const ping = setInterval(() => { try { ws.send(JSON.stringify({ op: 'ping' })); } catch (e) {} }, 20000);
+  ws.onopen = () => ws.send(JSON.stringify({ op: 'subscribe', args: ['kline.1.XAUUSDT'] }));
+  ws.onmessage = (ev) => {
+    try {
+      const m = JSON.parse(ev.data);
+      if (m.topic === 'kline.1.XAUUSDT' && Array.isArray(m.data) && m.data.length) {
+        const c = parseFloat(m.data[m.data.length - 1].close);
+        if (isFinite(c)) { __wsOn = true; window.__WS_ON__ = true; applyTick(c); }
+      }
+    } catch (e) {}
+  };
+  ws.onclose = () => { clearInterval(ping); __wsOn = false; window.__WS_ON__ = false; setTimeout(startOkxWS, 3000); };
+  ws.onerror = () => { try { ws.close(); } catch (e) {} };
+  return true;
+}
+function startOkxWS(){
+  let ws;
+  try { ws = new WebSocket('wss://ws.okx.com:8443/ws/v5/public'); } catch (e) { return; }
+  const ping = setInterval(() => { try { ws.send('ping'); } catch (e) {} }, 25000);
+  ws.onopen = () => ws.send(JSON.stringify({ op: 'subscribe', args: [{ channel: 'tickers', instId: 'XAU-USDT-SWAP' }] }));
+  ws.onmessage = (ev) => {
+    try {
+      const m = JSON.parse(ev.data);
+      if (m.data && m.data.length && m.data[0].last) {
+        const c = parseFloat(m.data[0].last);
+        if (isFinite(c)) { __wsOn = true; window.__WS_ON__ = true; applyTick(c); }
+      }
+    } catch (e) {}
+  };
+  ws.onclose = () => { clearInterval(ping); __wsOn = false; window.__WS_ON__ = false; setTimeout(startBybitWS, 5000); };
+  ws.onerror = () => { try { ws.close(); } catch (e) {} };
+}
 function fitBoard(){
   const s = Math.min(1, window.innerWidth / 1560);
   document.documentElement.style.zoom = s;
@@ -1278,6 +1344,7 @@ function fitBoard(){
 window.addEventListener("resize", fitBoard);
 (async function(){
   fitBoard();
+  startBybitWS();
   await computeAndRender();
   try { await document.fonts.ready; } catch (e) {}
   requestAnimationFrame(() => { window.__POSTER_READY__ = true; });
@@ -1285,7 +1352,7 @@ window.addEventListener("resize", fitBoard);
     if (__liveBusy) return;
     __liveCount--;
     if (__liveCount <= 0) { computeAndRender(); }
-    else if (__liveOk) setLiveStatus("LIVE · cập nhật " + timeNowJst().slice(0, 5) + " JST · lần tới sau " + __liveCount + "s");
+    else if (__liveOk) setLiveStatus("LIVE" + (__wsOn ? " · giá trực tiếp" : "") + " · cập nhật " + timeNowJst().slice(0, 5) + " JST · lần tới sau " + __liveCount + "s");
   }, 1000);
 })();
 </script>
