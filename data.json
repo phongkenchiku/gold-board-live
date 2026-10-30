@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-10-30T10:20:44.437Z",
+ "updated_at": "2026-10-30T11:11:42.408Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-10-30T10:20:44.307Z",
+  "fetched_at": "2026-10-30T11:11:42.280Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -2,
@@ -48,20 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-10-30T10:20:44.125Z",
+  "fetched_at": "2026-10-30T11:11:41.974Z",
   "items": [
-   {
-    "time_jst": "19:00",
-    "title": "Tỷ lệ thất nghiệp EU",
-    "impact": "medium",
-    "forecast": 6.4
-   },
-   {
-    "time_jst": "19:00",
-    "title": "GDP EU sơ bộ (quý)",
-    "impact": "high",
-    "forecast": 0.2
-   },
    {
     "time_jst": "21:30",
     "title": "Chỉ số chi phí lao động Mỹ (ECI)",
@@ -73,6 +61,12 @@
     "title": "PMI Chicago (Mỹ)",
     "impact": "medium",
     "forecast": 56.1
+   },
+   {
+    "time_jst": "01:30 31/10",
+    "title": "Fed — Musalem phát biểu",
+    "impact": "medium",
+    "forecast": null
    }
   ]
  }
