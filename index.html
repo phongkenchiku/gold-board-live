@@ -126,6 +126,12 @@
     background:linear-gradient(180deg,#e9c95c,#c39a22); color:#221a02; border:0; border-radius:14px;
     font-weight:800; font-size:12.5px; padding:4px 12px; cursor:pointer;
   }
+  #tfChips { margin-left:auto; display:flex; gap:5px; flex:none; }
+  #tfChips button {
+    background:rgba(8,10,9,.85); color:#c9c4b2; border:1px solid #4a4230; border-radius:13px;
+    font-size:12.5px; font-weight:700; padding:3px 11px; cursor:pointer;
+  }
+  #tfChips button.on { background:linear-gradient(180deg,#e9c95c,#c39a22); color:#221a02; border-color:#c39a22; }
 </style>
 </head>
 <body>
@@ -164,7 +170,7 @@
       <div class="chart-head">
         <span class="ct" id="chartTitle">XAUUSD - M15</span>
         <span class="tbadge flat" id="h1Badge">H1: —</span>
-        <span class="facts" id="h1Facts"></span>
+        <span class="facts" id="h1Facts"></span><span id="tfChips"><button data-tf="M1">1P</button><button data-tf="M5">5P</button><button data-tf="M15" class="on">15P</button><button data-tf="M30">30P</button><button data-tf="H1">1H</button></span>
       </div>
       <div class="chart-box"><canvas id="mainChart"></canvas></div>
       <div class="sub-box"><canvas id="subChart"></canvas></div>
@@ -1248,6 +1254,76 @@ function render(d){
   $("srcLine").textContent = "Dữ liệu: " + (d.source || "—") + " · Cập nhật: " + upd + " · Lịch tin: TradingView";
 }
 
+/* ---------- timeframe switching for the main chart ----------
+ * Chips 1P/5P/15P/30P/1H switch the main chart's candles, its
+ * RSI/ADX/MACD subpanels and its trendline. The zones drawn stay the
+ * M15 strategy zones (price levels are timeframe-independent and must
+ * match the strategy column); the strategy column itself is unchanged. */
+let chartTF = 'M15';
+const TF_SPEC = {
+  M1:  { bybit: '1',  okx: '1m',  bucket: 60000 },
+  M5:  { bybit: '5',  okx: '5m',  bucket: 300000 },
+  M15: { bybit: '15', okx: '15m', bucket: 900000 },
+  M30: { bybit: '30', okx: '30m', bucket: 1800000 },
+  H1:  { bybit: '60', okx: '1H',  bucket: 3600000 },
+};
+async function fetchRawTF(tf){
+  const spec = TF_SPEC[tf];
+  try {
+    const c = await fetchBybit(spec.bybit, 1000);
+    if (c.length >= 150) return c;
+    throw new Error('few candles');
+  } catch (e) {
+    const c = await fetchOkx(spec.okx, 300);
+    if (c.length < 100) throw new Error('OKX few candles for ' + tf);
+    return c;
+  }
+}
+async function buildChartBlock(tf){
+  const cs = await fetchRawTF(tf);
+  const n = cs.length, cl = cs.map(c => c.c);
+  const rA = rsiWilder(cl), aA = adxWilder(cs), mA = macd(cl);
+  const last = n - 1;
+  let sc = 0;
+  if (rA[last] > 50) sc++; else if (rA[last] < 50) sc--;
+  if (mA.hist[last] > 0) sc++; else if (mA.hist[last] < 0) sc--;
+  if (aA.pDI[last] > aA.mDI[last]) sc++; else if (aA.mDI[last] > aA.pDI[last]) sc--;
+  const trend = (aA.adx[last] != null && aA.adx[last] < 15 && Math.abs(sc) < 3) || sc === 0 ? 'ĐI NGANG' : sc > 0 ? 'TĂNG' : 'GIẢM';
+  const start = n - 96;
+  const sliceA = arr => arr.slice(start).map(v => r2(v));
+  return {
+    timeframe: tf,
+    candles: toOutCandles(cs, 96),
+    rsi: sliceA(rA), adx: sliceA(aA.adx), macd_hist: sliceA(mA.hist), macd_line: sliceA(mA.line),
+    trendline: buildTrendline(cs.slice(start).map(c => ({ h: c.h, l: c.l })), trend === 'GIẢM' ? 'down' : trend === 'TĂNG' ? 'up' : 'auto'),
+    trend_m15: trend,
+  };
+}
+let __curBlock = null;
+function drawChartCurrent(){
+  const d = window.__LIVE_DATA__; if (!d) return;
+  const block = chartTF === 'M15' ? (d.main_chart || __curBlock) : __curBlock;
+  if (!block) return;
+  const view = Object.assign({}, d, { main_chart: block });
+  drawMain(view); drawSub(view); drawTimeline(view);
+  $("chartTitle").textContent = (d.symbol || "XAUUSD") + " - " + block.timeframe;
+  document.querySelectorAll('#tfChips button').forEach(b => {
+    b.classList.toggle('on', b.dataset.tf === chartTF);
+  });
+}
+async function showTF(tf){
+  chartTF = tf;
+  if (tf === 'M15') { __curBlock = null; drawChartCurrent(); return; }
+  try {
+    __curBlock = await buildChartBlock(tf);
+    if (chartTF === tf) drawChartCurrent();
+  } catch (e) { console.error('TF fetch failed:', e.message); }
+}
+document.addEventListener('click', (ev) => {
+  const b = ev.target.closest && ev.target.closest('#tfChips button');
+  if (b) showTF(b.dataset.tf);
+});
+
 /* ---------- live boot ---------- */
 let __liveBusy = false, __liveCount = 60, __liveOk = 0;
 function setLiveStatus(t){ const el = $("liveStatus"); if (el) el.textContent = t; }
@@ -1261,6 +1337,10 @@ async function computeAndRender(){
     const data = await computeData();
     window.__LIVE_DATA__ = data;
     render(data);
+    if (chartTF !== 'M15') {
+      try { __curBlock = await buildChartBlock(chartTF); } catch (e) { console.error('TF refresh failed:', e.message); }
+      drawChartCurrent();
+    }
     __liveOk++; window.__LIVE_OK__ = __liveOk;
     __liveCount = 60;
     setLiveStatus("LIVE · cập nhật " + timeNowJst() + " JST · lần tới sau 60s");
@@ -1300,7 +1380,9 @@ setInterval(() => {
     const f = (d.frames || {})[tf];
     if (f) { f.price = p; patchLast(f.candles, p, bk[tf]); }
   });
+  if (__curBlock && chartTF !== 'M15') patchLast(__curBlock.candles, p, TF_SPEC[chartTF].bucket);
   render(d);
+  if (chartTF !== 'M15') drawChartCurrent();
 }, 1000);
 function startBybitWS(){
   let ws;
