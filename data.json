@@ -1,0 +1,79 @@
+{
+ "updated_at": "2026-10-30T09:17:09.674Z",
+ "macro": {
+  "long_term": {
+   "central_bank_net_buy_tonnes": 289,
+   "central_bank_period": "Q2/2026",
+   "central_bank_yoy_pct": 62,
+   "etf_flow_tonnes": -44.8,
+   "etf_period": "Q2/2026",
+   "headline": "NHTW gom vàng",
+   "source": "World Gold Council",
+   "source_note": "Số quý do WGC công bố, Gol kiểm chứng qua tìm kiếm ngày 28/10/2026. Cập nhật tay khi WGC ra kỳ mới.",
+   "updated": "2026-10-28",
+   "verdict": "ĐỠ GIÁ"
+  },
+  "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
+  "ok": true,
+  "stale": false,
+  "fetched_at": "2026-10-30T09:17:09.674Z",
+  "short_term": {
+   "verdict": "ĐÈ GIÁ",
+   "points": -2,
+   "usd": {
+    "label": "USD broad",
+    "value": 121.3202,
+    "change": -0.0329,
+    "date": "2026-10-23",
+    "source": "FRED DTWEXBGS"
+   },
+   "us10y": {
+    "label": "Lợi suất Mỹ 10Y",
+    "value": 5.05,
+    "change": 0.06,
+    "unit": "%",
+    "date": "2026-10-28",
+    "source": "FRED DGS10"
+   },
+   "real10y": {
+    "label": "Lợi suất thực 10Y",
+    "value": 2.67,
+    "change": 0.03,
+    "unit": "%",
+    "date": "2026-10-28",
+    "source": "FRED DFII10"
+   }
+  }
+ },
+ "news": {
+  "ok": true,
+  "stale": false,
+  "fetched_at": "2026-10-30T09:17:08.483Z",
+  "items": [
+   {
+    "time_jst": "19:00",
+    "title": "Tỷ lệ thất nghiệp EU",
+    "impact": "medium",
+    "forecast": 6.4
+   },
+   {
+    "time_jst": "19:00",
+    "title": "GDP EU sơ bộ (năm)",
+    "impact": "high",
+    "forecast": 1.1
+   },
+   {
+    "time_jst": "21:30",
+    "title": "Chỉ số chi phí lao động Mỹ (ECI)",
+    "impact": "medium",
+    "forecast": 0.8
+   },
+   {
+    "time_jst": "22:45",
+    "title": "PMI Chicago (Mỹ)",
+    "impact": "medium",
+    "forecast": 56.1
+   }
+  ]
+ }
+}
