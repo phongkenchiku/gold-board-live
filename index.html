@@ -475,6 +475,142 @@ function buildTrendline(candles, prefer) {
   return tryLine('H') || tryLine('L');
 }
 
+/* ---------------- SMC layer (Phong, 2026-11-01, from an SMC basics reel) ----------------
+ * Premium/Discount + OTE retracement of the current M15 leg, liquidity
+ * sweeps of prior swing highs/lows, CHoCH on M15 structure, unmitigated
+ * FVGs, and a 0–100 entry-quality score for the priority scenario.
+ * Descriptive structure tools only — they tighten the entry conditions,
+ * they do not change the H1 trend verdict or the S/R zone system. */
+function swingIdx(candles, left = 2, right = 2) {
+  const pts = [];
+  for (let i = left; i < candles.length - right; i++) {
+    let isH = true, isL = true;
+    for (let j = 1; j <= left; j++) {
+      if (candles[i - j].h >= candles[i].h) isH = false;
+      if (candles[i - j].l <= candles[i].l) isL = false;
+    }
+    for (let j = 1; j <= right; j++) {
+      if (candles[i + j].h > candles[i].h) isH = false;
+      if (candles[i + j].l < candles[i].l) isL = false;
+    }
+    if (isH) pts.push({ i, p: candles[i].h, kind: 'H' });
+    if (isL) pts.push({ i, p: candles[i].l, kind: 'L' });
+  }
+  return pts;
+}
+
+function computeSMC(candles, price) {
+  const cs = candles.slice(-160);
+  const n = cs.length;
+  const sw = swingIdx(cs);
+  const smc = { leg: null, position_pct: null, pd_label: null, ote_buy: null, ote_sell: null, sweep: null, choch: null, fvg_above: [], fvg_below: [] };
+  if (n < 40 || sw.length < 2) return smc;
+  /* current leg: most recent swing high and swing low; the later one
+   * ends the leg. Stale legs (endpoint older than 48 candles) are
+   * ignored so PD/OTE describe the move price is actually in. */
+  const lastH = [...sw].reverse().find((s) => s.kind === 'H');
+  const lastL = [...sw].reverse().find((s) => s.kind === 'L');
+  if (lastH && lastL && lastH.i !== lastL.i) {
+    const endI = Math.max(lastH.i, lastL.i);
+    if (n - 1 - endI <= 48) {
+      const hi = lastH.p, lo = lastL.p, range = hi - lo;
+      if (range > 0) {
+        const dir = lastH.i > lastL.i ? 'up' : 'down';
+        smc.leg = { lo: r2(lo), hi: r2(hi), dir };
+        smc.position_pct = Math.round(((price - lo) / range) * 100);
+        smc.pd_label = smc.position_pct >= 50 ? 'PREMIUM' : 'DISCOUNT';
+        const pack = (a, b) => [Math.floor(Math.min(a, b)), Math.ceil(Math.max(a, b))];
+        if (dir === 'down') smc.ote_sell = pack(lo + 0.62 * range, lo + 0.79 * range);
+        if (dir === 'up') smc.ote_buy = pack(hi - 0.79 * range, hi - 0.62 * range);
+      }
+    }
+  }
+  /* liquidity sweep: within the last 10 candles, a wick through a
+   * confirmed prior swing level that closes back inside. */
+  for (let k = n - 1; k >= Math.max(0, n - 10); k--) {
+    const priorH = sw.filter((s) => s.kind === 'H' && s.i < k - 2).pop();
+    if (priorH && cs[k].h > priorH.p && cs[k].c < priorH.p) { smc.sweep = { dir: 'down', level: r2(priorH.p), bars_ago: n - 1 - k }; break; }
+    const priorL = sw.filter((s) => s.kind === 'L' && s.i < k - 2).pop();
+    if (priorL && cs[k].l < priorL.p && cs[k].c > priorL.p) { smc.sweep = { dir: 'up', level: r2(priorL.p), bars_ago: n - 1 - k }; break; }
+  }
+  /* CHoCH: structure was making lower highs (or higher lows) and the
+   * last close breaks the most recent swing point the other way. */
+  const highs = sw.filter((s) => s.kind === 'H'), lows = sw.filter((s) => s.kind === 'L');
+  const close = cs[n - 1].c;
+  if (highs.length >= 2) {
+    const lh = highs[highs.length - 1], prev = highs[highs.length - 2];
+    if (lh.p < prev.p && close > lh.p) smc.choch = { dir: 'up', level: r2(lh.p) };
+  }
+  if (!smc.choch && lows.length >= 2) {
+    const hl = lows[lows.length - 1], prev = lows[lows.length - 2];
+    if (hl.p > prev.p && close < hl.p) smc.choch = { dir: 'down', level: r2(hl.p) };
+  }
+  /* unmitigated FVGs (3-candle gaps never fully revisited since) */
+  const gaps = [];
+  for (let i = Math.max(2, n - 120); i < n; i++) {
+    if (cs[i].l > cs[i - 2].h) {
+      const g = { lo: cs[i - 2].h, hi: cs[i].l, dir: 'up' };
+      let filled = false;
+      for (let j = i + 1; j < n; j++) if (cs[j].l <= g.lo) { filled = true; break; }
+      if (!filled) gaps.push(g);
+    }
+    if (cs[i].h < cs[i - 2].l) {
+      const g = { lo: cs[i].h, hi: cs[i - 2].l, dir: 'down' };
+      let filled = false;
+      for (let j = i + 1; j < n; j++) if (cs[j].h >= g.hi) { filled = true; break; }
+      if (!filled) gaps.push(g);
+    }
+  }
+  const packG = (g) => [Math.floor(g.lo), Math.ceil(g.hi)];
+  smc.fvg_above = gaps.filter((g) => g.lo > price).sort((a, b) => a.lo - b.lo).slice(0, 2).map(packG);
+  smc.fvg_below = gaps.filter((g) => g.hi < price).sort((a, b) => b.hi - a.hi).slice(0, 2).map(packG);
+  return smc;
+}
+
+function smcCondText(side, smc) {
+  if (!smc) return null;
+  const want = side === 'SELL' ? 'down' : 'up';
+  let sweepTxt;
+  if (smc.sweep && smc.sweep.dir === want) sweepTxt = side === 'SELL' ? `Đã quét thanh khoản trên đỉnh cũ ${fmt(smc.sweep.level)} rồi quay đầu` : `Đã quét thanh khoản dưới đáy cũ ${fmt(smc.sweep.level)} rồi quay đầu`;
+  else if (smc.sweep) sweepTxt = 'Vừa có quét thanh khoản ngược hướng — cẩn trọng';
+  else sweepTxt = side === 'SELL' ? 'Chờ quét đỉnh cũ lấy thanh khoản trước khi bán' : 'Chờ quét đáy cũ lấy thanh khoản trước khi mua';
+  let chochTxt;
+  if (smc.choch && smc.choch.dir === want) chochTxt = side === 'SELL' ? 'CHoCH M15 đã xác nhận giảm' : 'CHoCH M15 đã xác nhận tăng';
+  else if (smc.choch) chochTxt = 'CHoCH M15 đang ngược hướng kịch bản — giảm khối lượng';
+  else chochTxt = side === 'SELL' ? 'Chờ CHoCH M15 xác nhận giảm' : 'Chờ CHoCH M15 xác nhận tăng';
+  return `SMC: ${sweepTxt}; ${chochTxt}`;
+}
+
+/* Entry-quality score 0–100 for the priority scenario. Transparent
+ * checklist, not a probability estimate from backtesting. */
+function scoreEntry(side, price, scen, smc, trendH1, trendM15, trendM5, atr) {
+  let score = 0; const reasons = [];
+  const aligned = (trendH1 === 'TĂNG' && side === 'BUY') || (trendH1 === 'GIẢM' && side === 'SELL');
+  if (aligned) { score += 20; reasons.push('Thuận xu hướng chính H1'); }
+  else if (trendH1 === 'ĐI NGANG') { score += 8; reasons.push('H1 đi ngang, đánh theo cạnh biên'); }
+  const ez = scen.entry_zone, inZone = ez && price >= ez[0] && price <= ez[1];
+  if (inZone) { score += 25; reasons.push('Giá đang nằm trong vùng vào lệnh'); }
+  else if (ez && atr) {
+    const dist = price < ez[0] ? ez[0] - price : price - ez[1];
+    if (dist <= 0.5 * atr) { score += 12; reasons.push('Giá sát vùng vào lệnh (≤0,5 ATR)'); }
+  }
+  const ote = side === 'SELL' ? (smc && smc.ote_sell) : (smc && smc.ote_buy);
+  if (ote && price >= ote[0] && price <= ote[1]) { score += 15; reasons.push('Giá trong vùng OTE 62–79%'); }
+  else if (ote && ez && ez[0] <= ote[1] && ote[0] <= ez[1]) { score += 8; reasons.push('Vùng vào lệnh chồng vùng OTE'); }
+  if (smc && smc.pd_label) {
+    if ((side === 'SELL' && smc.pd_label === 'PREMIUM') || (side === 'BUY' && smc.pd_label === 'DISCOUNT')) { score += 10; reasons.push(side === 'SELL' ? 'Giá ở vùng Premium (nửa trên nhịp sóng)' : 'Giá ở vùng Discount (nửa dưới nhịp sóng)'); }
+    else if (smc.position_pct >= 42 && smc.position_pct <= 58) { score += 5; }
+  }
+  const want = side === 'SELL' ? 'down' : 'up';
+  if (smc && smc.sweep && smc.sweep.dir === want) { score += 15; reasons.push('Đã quét thanh khoản đúng hướng'); }
+  if (smc && smc.choch && smc.choch.dir === want) { score += 10; reasons.push('CHoCH M15 xác nhận đúng hướng'); }
+  if ((trendM15 === 'TĂNG' && side === 'BUY') || (trendM15 === 'GIẢM' && side === 'SELL')) score += 3;
+  if ((trendM5 === 'TĂNG' && side === 'BUY') || (trendM5 === 'GIẢM' && side === 'SELL')) score += 2;
+  score = Math.min(100, score);
+  const verdict = score >= 75 ? 'XÁC SUẤT CAO' : score >= 55 ? 'KHÁ TỐT — CHỜ THÊM XÁC NHẬN' : 'CHƯA ĐẸP — ĐỨNG NGOÀI LÀ HỢP LÝ';
+  return { score, verdict, reasons };
+}
+
 /* ---------------- comments & scenarios ---------------- */
 function frameComment(f, zones, atr) {
   const parts = [];
@@ -545,14 +681,17 @@ function buildScenarios(trend, zones, atr, price, ctx) {
   const sellFade = (no, main, alt, isPriority) => {
     const s = scenBase(no, isPriority ? 'ƯU TIÊN SELL — HỒI LÊN KHÁNG CỰ' : 'SELL — CẠNH TRÊN BIÊN ĐI NGANG', 'SELL',
       main && alt && alt[0] > main[1] ? 'SELL KHI GIÁ HỒI' : 'SELL Ở KHÁNG CỰ');
-    s.entry_zone = main; s.entry_alt_zone = alt && alt[0] > main[1] ? alt : null;
+    const oteAltS = ctx && ctx.smc ? ctx.smc.ote_sell : null;
+    s.entry_zone = main;
+    if (oteAltS && oteAltS[0] > main[1]) { s.entry_alt_zone = oteAltS; s.alt_is_ote = true; }
+    else s.entry_alt_zone = alt && alt[0] > main[1] ? alt : null;
     const anchor = s.entry_alt_zone || main;
     s.sl_zone = [anchor[1] + buf1, anchor[1] + buf2];
     s.tps = tpList([S1, S2, S3]);
     s.tp_ext = [Math.round(S3[0] - atr), Math.round(S3[1] - atr)];
     s.conditions_list = [
       `Giá hồi lên vùng kháng cự ${zoneStr(main)}${s.entry_alt_zone ? `, tốt hơn ${zoneStr(s.entry_alt_zone)}` : ''}`,
-      'M15 xuất hiện nến đảo chiều giảm (nhấn chìm giảm, pin bar)',
+      (ctx && ctx.smc && smcCondText('SELL', ctx.smc)) || 'M15 xuất hiện nến đảo chiều giảm (nhấn chìm giảm, pin bar)',
       `RSI quay đầu xuống, không bán đuổi${rsiTxt}`,
       'M5 không đóng nến vượt lên khỏi vùng kháng cự',
     ];
@@ -567,14 +706,17 @@ function buildScenarios(trend, zones, atr, price, ctx) {
   const buyFade = (no, main, alt, isPriority) => {
     const s = scenBase(no, isPriority ? 'ƯU TIÊN BUY — CHỜ HỒI VỀ HỖ TRỢ' : 'BUY — CẠNH DƯỚI BIÊN ĐI NGANG', 'BUY',
       main && alt && alt[1] < main[0] ? 'BUY KHI GIÁ HỒI' : 'BUY Ở HỖ TRỢ');
-    s.entry_zone = main; s.entry_alt_zone = alt && alt[1] < main[0] ? alt : null;
+    const oteAltB = ctx && ctx.smc ? ctx.smc.ote_buy : null;
+    s.entry_zone = main;
+    if (oteAltB && oteAltB[1] < main[0]) { s.entry_alt_zone = oteAltB; s.alt_is_ote = true; }
+    else s.entry_alt_zone = alt && alt[1] < main[0] ? alt : null;
     const anchor = s.entry_alt_zone || main;
     s.sl_zone = [anchor[0] - buf2, anchor[0] - buf1];
     s.tps = tpList([R1, R2, R3]);
     s.tp_ext = [Math.round(R3[0] + atr), Math.round(R3[1] + atr)];
     s.conditions_list = [
       `Giá hồi xuống vùng hỗ trợ ${zoneStr(main)}${s.entry_alt_zone ? `, tốt hơn ${zoneStr(s.entry_alt_zone)}` : ''}`,
-      'M15 xuất hiện nến đảo chiều tăng (nhấn chìm tăng, pin bar)',
+      (ctx && ctx.smc && smcCondText('BUY', ctx.smc)) || 'M15 xuất hiện nến đảo chiều tăng (nhấn chìm tăng, pin bar)',
       `RSI quay đầu lên, không mua đuổi${rsiTxt}`,
       'M5 không đóng nến xuyên xuống khỏi vùng hỗ trợ',
     ];
@@ -843,6 +985,15 @@ async function computeData() {
     trend_m15: m15Frame.trend,
   };
 
+  /* ---- SMC layer + entry score for the priority scenario ---- */
+  const smcStruct = computeSMC(M15, price);
+  const scenarios = buildScenarios(trend, zonesM, atr15, price, { rsi_m15: m15Frame.rsi, smc: smcStruct });
+  const m5Frame = frameData(m5d);
+  const scored = scoreEntry(scenarios[0].side, price, scenarios[0], smcStruct, trend, m15Frame.trend, m5Frame.trend, atr15);
+  const smc = Object.assign({}, smcStruct, {
+    entry_score: scored.score, entry_verdict: scored.verdict, entry_reasons: scored.reasons, side: scenarios[0].side,
+  });
+
   const out = {
     generated_at: new Date().toISOString(),
     session: sessionInfo(),
@@ -873,9 +1024,10 @@ async function computeData() {
       H1: h1Frame,
       M30: frameData(m30d),
       M15: m15Frame,
-      M5: frameData(m5d),
+      M5: m5Frame,
     },
-    scenarios: buildScenarios(trend, zonesM, atr15, price, { rsi_m15: m15Frame.rsi }),
+    scenarios,
+    smc,
     macro,
     news,
   };
@@ -1007,6 +1159,9 @@ function drawMain(d){
   candles.forEach(c => { eat(c[2]); eat(c[3]); });
   res.forEach(z => { eat(z[0]); eat(z[1]); });
   sup.forEach(z => { eat(z[0]); eat(z[1]); });
+  const smcF = d.smc || {};
+  (smcF.fvg_above || []).forEach(z => { eat(z[0]); eat(z[1]); });
+  (smcF.fvg_below || []).forEach(z => { eat(z[0]); eat(z[1]); });
   eat(d.price);
   if (!isFinite(mn)) { mn = 0; mx = 1; }
   const pad = (mx - mn) * 0.05; mn -= pad; mx += pad;
@@ -1036,6 +1191,19 @@ function drawMain(d){
   };
   res.forEach((z, i) => labels.push({ text: fmtRange(z) + "  " + (RES_NAMES[i] || "Kháng cự"), cy: band(z, "rgba(229,72,77,"), col: "#ff9d9d", rgba: "rgba(229,72,77," }));
   sup.forEach((z, i) => labels.push({ text: fmtRange(z) + "  " + (SUP_NAMES[i] || "Hỗ trợ"), cy: band(z, "rgba(38,190,133,"), col: "#7fe3bb", rgba: "rgba(38,190,133," }));
+
+  /* FVG bands (SMC): thin gold dashed outlines, no price chips */
+  const fvgBand = (z) => {
+    const y1 = Y(z[1]), y2 = Y(z[0]), hh = Math.max(3, y2 - y1);
+    ctx.fillStyle = "rgba(232,199,102,0.10)"; ctx.fillRect(0, y1, plotW, hh);
+    ctx.strokeStyle = "rgba(232,199,102,0.6)"; ctx.setLineDash([4, 3]);
+    ctx.strokeRect(0.5, y1, plotW - 1, hh); ctx.setLineDash([]);
+    ctx.fillStyle = "#e8c766"; ctx.font = "700 10.5px 'Noto Sans','DejaVu Sans',sans-serif"; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+    ctx.fillText("FVG", 6, y1 + hh / 2);
+    ctx.textBaseline = "alphabetic";
+  };
+  (smcF.fvg_above || []).forEach(fvgBand);
+  (smcF.fvg_below || []).forEach(fvgBand);
 
   /* candles */
   candles.forEach((c, i) => {
@@ -1209,9 +1377,22 @@ function renderStrategy(d){
   html += '<div class="headline ' + side + '">' + arrow + " " + (s.headline || s.title || "") + "</div>";
   if (s.entry_zone){
     html += '<div class="ez"><span class="lbl">Vùng vào lệnh</span><span class="val">' + fmtRange(s.entry_zone) + "</span>" +
-      (s.entry_alt_zone ? '<span class="alt">Tốt hơn: <b>' + fmtRange(s.entry_alt_zone) + "</b></span>" : "") + "</div>";
+      (s.entry_alt_zone ? '<span class="alt">' + (s.alt_is_ote ? "Tốt hơn (OTE 62–79%): " : "Tốt hơn: ") + "<b>" + fmtRange(s.entry_alt_zone) + "</b></span>" : "") + "</div>";
   } else if (s.entry){
     html += '<div class="ez"><span class="val" style="font-size:17px;">' + stripLbl(s.entry, "Vùng vào") + "</span></div>";
+  }
+  const smc = d.smc;
+  if (smc && smc.entry_score != null){
+    const sc = smc.entry_score;
+    const col = sc >= 75 ? "#26be85" : sc >= 55 ? "#e8c766" : "#9a978c";
+    html += '<div style="margin-top:7px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">' +
+      '<span style="border:1.5px solid ' + col + ";color:" + col + ';border-radius:12px;padding:2px 10px;font-weight:800;font-size:13px;">ĐIỂM VÀO LỆNH ' + sc + "/100</span>" +
+      '<span style="font-size:12px;color:#c9c4b2;">' + (smc.entry_verdict || "") + "</span></div>";
+    const bits = [];
+    if (smc.pd_label) bits.push(smc.pd_label + (smc.position_pct != null ? " " + smc.position_pct + "%" : ""));
+    if (smc.sweep) bits.push(smc.sweep.dir === "down" ? "Đã quét đỉnh " + fmtPrice(smc.sweep.level) : "Đã quét đáy " + fmtPrice(smc.sweep.level));
+    if (smc.choch) bits.push("CHoCH " + (smc.choch.dir === "down" ? "giảm " : "tăng ") + fmtPrice(smc.choch.level));
+    if (bits.length) html += '<div style="margin-top:5px;font-size:12px;color:#a9a48f;">SMC: ' + bits.join(" · ") + "</div>";
   }
   const conds = (s.conditions_list && s.conditions_list.length) ? s.conditions_list
     : [stripLbl(s.conditions, "Điều kiện")].filter(Boolean);
