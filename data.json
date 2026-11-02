@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-02T22:16:28.197Z",
+ "updated_at": "2026-11-02T23:13:56.712Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-02T22:16:28.071Z",
+  "fetched_at": "2026-11-02T23:13:56.625Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 3,
@@ -48,13 +48,25 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-02T22:16:28.000Z",
+  "fetched_at": "2026-11-02T23:13:56.513Z",
   "items": [
    {
     "time_jst": "09:00",
     "title": "Midterm Elections",
     "impact": "high",
     "forecast": null
+   },
+   {
+    "time_jst": "00:00 04/11",
+    "title": "Việc làm mở JOLTS (Mỹ)",
+    "impact": "high",
+    "forecast": 7.13
+   },
+   {
+    "time_jst": "00:00 04/11",
+    "title": "Factory Orders MoM",
+    "impact": "medium",
+    "forecast": 1.2
    }
   ]
  }
