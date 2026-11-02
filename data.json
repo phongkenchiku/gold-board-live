@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-02T03:51:38.644Z",
+ "updated_at": "2026-11-02T04:55:35.267Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-02T03:51:38.615Z",
+  "fetched_at": "2026-11-02T04:55:35.163Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 2,
@@ -48,19 +48,19 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-02T03:51:38.334Z",
+  "fetched_at": "2026-11-02T04:55:35.085Z",
   "items": [
-   {
-    "time_jst": "00:00 03/11",
-    "title": "PMI sản xuất ISM (Mỹ)",
-    "impact": "high",
-    "forecast": 54.6
-   },
    {
     "time_jst": "00:00 03/11",
     "title": "ISM Manufacturing Employment",
     "impact": "medium",
     "forecast": null
+   },
+   {
+    "time_jst": "00:00 03/11",
+    "title": "PMI sản xuất ISM (Mỹ)",
+    "impact": "high",
+    "forecast": 54.6
    },
    {
     "time_jst": "01:15 03/11",
