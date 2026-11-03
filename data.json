@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-03T19:26:25.969Z",
+ "updated_at": "2026-11-03T20:23:16.089Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-03T19:26:25.701Z",
+  "fetched_at": "2026-11-03T20:23:16.089Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 3,
@@ -48,7 +48,7 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-03T19:26:25.412Z",
+  "fetched_at": "2026-11-03T20:23:15.957Z",
   "items": [
    {
     "time_jst": "06:30",
@@ -65,6 +65,12 @@
    {
     "time_jst": "19:00",
     "title": "Core Inflation Rate MoM Flash",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "21:00",
+    "title": "MBA 5/1 ARM Contract Rate",
     "impact": "medium",
     "forecast": null
    }
