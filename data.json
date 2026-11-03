@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-03T14:36:24.911Z",
+ "updated_at": "2026-11-03T15:27:51.785Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-03T14:36:24.828Z",
+  "fetched_at": "2026-11-03T15:27:51.679Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 3,
@@ -48,22 +48,22 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-03T14:36:24.725Z",
+  "fetched_at": "2026-11-03T15:27:51.512Z",
   "items": [
    {
-    "time_jst": "00:00 04/11",
+    "time_jst": "00:00",
     "title": "Đơn hàng bền Mỹ",
     "impact": "medium",
     "forecast": null
    },
    {
-    "time_jst": "00:00 04/11",
+    "time_jst": "00:00",
     "title": "Factory Orders MoM",
     "impact": "medium",
     "forecast": 1.2
    },
    {
-    "time_jst": "06:30 04/11",
+    "time_jst": "06:30",
     "title": "API Crude Oil Stock Change",
     "impact": "medium",
     "forecast": 2.1
