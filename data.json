@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-03T06:58:56.344Z",
+ "updated_at": "2026-11-03T08:16:02.067Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-03T06:58:56.293Z",
+  "fetched_at": "2026-11-03T08:16:02.052Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 3,
@@ -48,8 +48,14 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-03T06:58:56.184Z",
+  "fetched_at": "2026-11-03T08:16:01.749Z",
   "items": [
+   {
+    "time_jst": "00:00 04/11",
+    "title": "Đơn hàng bền Mỹ",
+    "impact": "medium",
+    "forecast": null
+   },
    {
     "time_jst": "00:00 04/11",
     "title": "Factory Orders MoM",
@@ -57,16 +63,10 @@
     "forecast": 1.2
    },
    {
-    "time_jst": "00:00 04/11",
-    "title": "Việc làm mở JOLTS (Mỹ)",
-    "impact": "high",
-    "forecast": 7.13
-   },
-   {
     "time_jst": "06:30 04/11",
     "title": "API Crude Oil Stock Change",
     "impact": "medium",
-    "forecast": null
+    "forecast": 2.1
    }
   ]
  }
