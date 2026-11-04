@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-04T12:32:58.924Z",
+ "updated_at": "2026-11-04T13:52:59.538Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-04T12:32:58.773Z",
+  "fetched_at": "2026-11-04T13:52:59.524Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 2,
@@ -48,14 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-04T12:32:58.590Z",
+  "fetched_at": "2026-11-04T13:52:59.164Z",
   "items": [
-   {
-    "time_jst": "22:15",
-    "title": "ADP Employment Change",
-    "impact": "medium",
-    "forecast": 69
-   },
    {
     "time_jst": "22:30",
     "title": "Goods Trade Balance",
@@ -73,6 +67,12 @@
     "title": "PMI dịch vụ ISM (Mỹ)",
     "impact": "high",
     "forecast": 54.8
+   },
+   {
+    "time_jst": "00:30 05/11",
+    "title": "EIA Ethanol Production",
+    "impact": "medium",
+    "forecast": null
    }
   ]
  }
