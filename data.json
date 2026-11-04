@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-04T14:54:38.401Z",
+ "updated_at": "2026-11-04T15:52:50.185Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-04T14:54:38.382Z",
+  "fetched_at": "2026-11-04T15:52:50.000Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 2,
@@ -48,22 +48,16 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-04T14:54:38.063Z",
+  "fetched_at": "2026-11-04T15:52:49.899Z",
   "items": [
    {
-    "time_jst": "00:00 05/11",
-    "title": "PMI dịch vụ ISM (Mỹ)",
-    "impact": "high",
-    "forecast": 54.8
-   },
-   {
-    "time_jst": "00:30 05/11",
+    "time_jst": "00:30",
     "title": "EIA Ethanol Production",
     "impact": "medium",
     "forecast": null
    },
    {
-    "time_jst": "00:30 05/11",
+    "time_jst": "00:30",
     "title": "EIA Ethanol Stocks",
     "impact": "medium",
     "forecast": null
