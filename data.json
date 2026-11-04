@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-04T11:31:04.335Z",
+ "updated_at": "2026-11-04T12:32:58.924Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-04T11:31:04.300Z",
+  "fetched_at": "2026-11-04T12:32:58.773Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 2,
@@ -48,20 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-04T11:31:04.175Z",
+  "fetched_at": "2026-11-04T12:32:58.590Z",
   "items": [
-   {
-    "time_jst": "21:00",
-    "title": "MBA 5/1 ARM Contract Rate",
-    "impact": "medium",
-    "forecast": null
-   },
-   {
-    "time_jst": "21:00",
-    "title": "MBA 5/1 ARM Effective Rate",
-    "impact": "medium",
-    "forecast": null
-   },
    {
     "time_jst": "22:15",
     "title": "ADP Employment Change",
@@ -73,6 +61,18 @@
     "title": "Goods Trade Balance",
     "impact": "medium",
     "forecast": null
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Balance of Trade",
+    "impact": "medium",
+    "forecast": -108
+   },
+   {
+    "time_jst": "00:00 05/11",
+    "title": "PMI dịch vụ ISM (Mỹ)",
+    "impact": "high",
+    "forecast": 54.8
    }
   ]
  }
