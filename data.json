@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-04T20:48:41.348Z",
+ "updated_at": "2026-11-04T21:46:20.012Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 289,
@@ -16,10 +16,10 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-04T20:48:41.309Z",
+  "fetched_at": "2026-11-04T21:46:19.930Z",
   "short_term": {
-   "verdict": "ĐỠ GIÁ",
-   "points": 2,
+   "verdict": "TRUNG TÍNH",
+   "points": -1,
    "usd": {
     "label": "USD broad",
     "value": 121.6656,
@@ -29,18 +29,18 @@
    },
    "us10y": {
     "label": "Lợi suất Mỹ 10Y",
-    "value": 4.91,
-    "change": -0.03,
+    "value": 4.95,
+    "change": 0.04,
     "unit": "%",
-    "date": "2026-11-02",
+    "date": "2026-11-03",
     "source": "FRED DGS10"
    },
    "real10y": {
     "label": "Lợi suất thực 10Y",
-    "value": 2.62,
-    "change": 0.02,
+    "value": 2.65,
+    "change": 0.03,
     "unit": "%",
-    "date": "2026-11-02",
+    "date": "2026-11-03",
     "source": "FRED DFII10"
    }
   }
@@ -48,13 +48,25 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-04T20:48:41.173Z",
+  "fetched_at": "2026-11-04T21:46:19.698Z",
   "items": [
    {
     "time_jst": "17:30",
     "title": "S&P Global Construction PMI",
     "impact": "medium",
     "forecast": null
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Unit Labour Costs QoQ Prel",
+    "impact": "medium",
+    "forecast": 0.6
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Nonfarm Productivity QoQ Prel",
+    "impact": "medium",
+    "forecast": 2.8
    }
   ]
  }
