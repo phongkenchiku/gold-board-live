@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-05T22:48:02.641Z",
+ "updated_at": "2026-11-05T23:41:12.781Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-05T22:48:02.549Z",
+  "fetched_at": "2026-11-05T23:41:12.781Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 2,
@@ -48,7 +48,7 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-05T22:48:02.302Z",
+  "fetched_at": "2026-11-05T23:41:12.510Z",
   "items": [
    {
     "time_jst": "19:00",
@@ -67,6 +67,12 @@
     "title": "Average Hourly Earnings YoY",
     "impact": "medium",
     "forecast": 2.9
+   },
+   {
+    "time_jst": "00:00 07/11",
+    "title": "Michigan Consumer Sentiment Prel",
+    "impact": "high",
+    "forecast": 48
    }
   ]
  }
