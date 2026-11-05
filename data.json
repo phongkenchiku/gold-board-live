@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-05T00:14:06.554Z",
+ "updated_at": "2026-11-05T01:31:47.326Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-05T00:14:06.540Z",
+  "fetched_at": "2026-11-05T01:31:47.219Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": -1,
@@ -48,7 +48,7 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-05T00:14:06.411Z",
+  "fetched_at": "2026-11-05T01:31:46.914Z",
   "items": [
    {
     "time_jst": "17:30",
@@ -67,6 +67,12 @@
     "title": "Nonfarm Productivity QoQ Prel",
     "impact": "medium",
     "forecast": 2.8
+   },
+   {
+    "time_jst": "01:30 06/11",
+    "title": "4-Week Bill Auction Allotted at High",
+    "impact": "medium",
+    "forecast": null
    }
   ]
  }
