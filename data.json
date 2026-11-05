@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-05T21:02:11.192Z",
+ "updated_at": "2026-11-05T21:58:41.130Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,10 +16,10 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-05T21:02:11.145Z",
+  "fetched_at": "2026-11-05T21:58:41.049Z",
   "short_term": {
-   "verdict": "TRUNG TÍNH",
-   "points": -1,
+   "verdict": "ĐỠ GIÁ",
+   "points": 2,
    "usd": {
     "label": "USD broad",
     "value": 121.6656,
@@ -29,18 +29,18 @@
    },
    "us10y": {
     "label": "Lợi suất Mỹ 10Y",
-    "value": 4.95,
-    "change": 0.04,
+    "value": 4.9,
+    "change": -0.05,
     "unit": "%",
-    "date": "2026-11-03",
+    "date": "2026-11-04",
     "source": "FRED DGS10"
    },
    "real10y": {
     "label": "Lợi suất thực 10Y",
-    "value": 2.65,
-    "change": 0.03,
+    "value": 2.64,
+    "change": -0.01,
     "unit": "%",
-    "date": "2026-11-03",
+    "date": "2026-11-04",
     "source": "FRED DFII10"
    }
   }
@@ -48,13 +48,25 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-05T21:02:11.034Z",
+  "fetched_at": "2026-11-05T21:58:40.800Z",
   "items": [
    {
     "time_jst": "19:00",
     "title": "Doanh số bán lẻ Mỹ",
     "impact": "medium",
     "forecast": -0.1
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Average Hourly Earnings MoM",
+    "impact": "medium",
+    "forecast": 0.3
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Average Hourly Earnings YoY",
+    "impact": "medium",
+    "forecast": 2.9
    }
   ]
  }
