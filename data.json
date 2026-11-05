@@ -1,22 +1,22 @@
 {
- "updated_at": "2026-11-04T23:27:55.964Z",
+ "updated_at": "2026-11-05T00:03:50.210Z",
  "macro": {
   "long_term": {
-   "central_bank_net_buy_tonnes": 289,
-   "central_bank_period": "Q2/2026",
-   "central_bank_yoy_pct": 62,
-   "etf_flow_tonnes": -44.8,
-   "etf_period": "Q2/2026",
+   "central_bank_net_buy_tonnes": 321,
+   "central_bank_period": "Q3/2026",
+   "central_bank_yoy_pct": 42,
+   "etf_flow_tonnes": 211,
+   "etf_period": "Q3/2026",
    "headline": "NHTW gom vàng",
    "source": "World Gold Council",
-   "source_note": "Số quý do WGC công bố, Gol kiểm chứng qua tìm kiếm ngày 28/10/2026. Cập nhật tay khi WGC ra kỳ mới.",
-   "updated": "2026-10-28",
+   "source_note": "WGC Gold Demand Trends Q3 2026, press release 2026-11-03, verified 2026-11-04.",
+   "updated": "2026-11-04",
    "verdict": "ĐỠ GIÁ"
   },
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-04T23:27:55.964Z",
+  "fetched_at": "2026-11-05T00:03:50.143Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": -1,
@@ -48,7 +48,7 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-04T23:27:55.860Z",
+  "fetched_at": "2026-11-05T00:03:49.903Z",
   "items": [
    {
     "time_jst": "17:30",
