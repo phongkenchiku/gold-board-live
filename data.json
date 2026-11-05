@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-05T08:19:12.272Z",
+ "updated_at": "2026-11-05T09:30:17.029Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-05T08:19:12.272Z",
+  "fetched_at": "2026-11-05T09:30:16.867Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": -1,
@@ -48,14 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-05T08:19:12.080Z",
+  "fetched_at": "2026-11-05T09:30:16.610Z",
   "items": [
-   {
-    "time_jst": "17:30",
-    "title": "S&P Global Construction PMI",
-    "impact": "medium",
-    "forecast": null
-   },
    {
     "time_jst": "22:30",
     "title": "Unit Labour Costs QoQ Prel",
@@ -71,6 +65,12 @@
    {
     "time_jst": "01:30 06/11",
     "title": "4-Week Bill Auction Allotted at High",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "01:30 06/11",
+    "title": "4-Week Bill Auction Bid-to-Cover",
     "impact": "medium",
     "forecast": null
    }
