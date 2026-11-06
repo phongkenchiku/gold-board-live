@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-06T09:26:47.437Z",
+ "updated_at": "2026-11-06T10:32:40.851Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-06T09:26:47.252Z",
+  "fetched_at": "2026-11-06T10:32:40.690Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 2,
@@ -48,14 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-06T09:26:47.075Z",
+  "fetched_at": "2026-11-06T10:32:40.556Z",
   "items": [
-   {
-    "time_jst": "19:00",
-    "title": "Doanh số bán lẻ Mỹ",
-    "impact": "medium",
-    "forecast": -0.1
-   },
    {
     "time_jst": "22:30",
     "title": "Average Hourly Earnings MoM",
@@ -73,6 +67,12 @@
     "title": "Michigan Consumer Sentiment Prel",
     "impact": "high",
     "forecast": 48
+   },
+   {
+    "time_jst": "04:00 07/11",
+    "title": "Baker Hughes Gas Rig Count",
+    "impact": "medium",
+    "forecast": null
    }
   ]
  }
