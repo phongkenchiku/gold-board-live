@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-08T17:18:25.399Z",
+ "updated_at": "2026-11-08T18:03:55.221Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-08T17:18:25.317Z",
+  "fetched_at": "2026-11-08T18:03:55.201Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 3,
@@ -48,7 +48,14 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-08T17:18:25.085Z",
-  "items": []
+  "fetched_at": "2026-11-08T18:03:54.974Z",
+  "items": [
+   {
+    "time_jst": "18:30",
+    "title": "Sentix Investor Confidence",
+    "impact": "medium",
+    "forecast": 2.1
+   }
+  ]
  }
 }
