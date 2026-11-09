@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-09T21:05:18.995Z",
+ "updated_at": "2026-11-09T21:58:52.911Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,31 +16,31 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-09T21:05:18.995Z",
+  "fetched_at": "2026-11-09T21:58:52.712Z",
   "short_term": {
-   "verdict": "ĐỠ GIÁ",
-   "points": 3,
+   "verdict": "ĐÈ GIÁ",
+   "points": -2,
    "usd": {
     "label": "USD broad",
-    "value": 121.6656,
-    "change": -0.0705,
-    "date": "2026-10-30",
+    "value": 121.8803,
+    "change": 0.3742,
+    "date": "2026-11-06",
     "source": "FRED DTWEXBGS"
    },
    "us10y": {
     "label": "Lợi suất Mỹ 10Y",
-    "value": 4.84,
-    "change": -0.06,
+    "value": 4.86,
+    "change": 0.02,
     "unit": "%",
-    "date": "2026-11-05",
+    "date": "2026-11-06",
     "source": "FRED DGS10"
    },
    "real10y": {
     "label": "Lợi suất thực 10Y",
-    "value": 2.6,
-    "change": -0.04,
+    "value": 2.63,
+    "change": 0.03,
     "unit": "%",
-    "date": "2026-11-05",
+    "date": "2026-11-06",
     "source": "FRED DFII10"
    }
   }
@@ -48,13 +48,25 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-09T21:05:18.775Z",
+  "fetched_at": "2026-11-09T21:58:52.400Z",
   "items": [
    {
     "time_jst": "21:15",
     "title": "ADP Employment Change Weekly",
     "impact": "medium",
     "forecast": null
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Core Inflation Rate MoM",
+    "impact": "high",
+    "forecast": 0.2
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Core Inflation Rate YoY",
+    "impact": "high",
+    "forecast": 2.8
    }
   ]
  }
