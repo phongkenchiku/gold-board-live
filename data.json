@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-09T09:38:16.585Z",
+ "updated_at": "2026-11-09T10:36:28.312Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-09T09:38:16.530Z",
+  "fetched_at": "2026-11-09T10:36:28.158Z",
   "short_term": {
    "verdict": "ĐỠ GIÁ",
    "points": 3,
@@ -48,14 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-09T09:38:16.252Z",
+  "fetched_at": "2026-11-09T10:36:28.036Z",
   "items": [
-   {
-    "time_jst": "18:30",
-    "title": "Sentix Investor Confidence",
-    "impact": "medium",
-    "forecast": 2.1
-   },
    {
     "time_jst": "01:00 10/11",
     "title": "United States-NY Fed Consumer Expectation…",
@@ -71,6 +65,12 @@
    {
     "time_jst": "01:30 10/11",
     "title": "3-Month Bill Auction Bid-to-Cover",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "03:00 10/11",
+    "title": "3-Year Note Auction Allotted at High",
     "impact": "medium",
     "forecast": null
    }
