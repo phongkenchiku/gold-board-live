@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-10T14:08:41.330Z",
+ "updated_at": "2026-11-10T15:04:03.618Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-10T14:08:41.294Z",
+  "fetched_at": "2026-11-10T15:04:03.581Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -2,
@@ -48,28 +48,28 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-10T14:08:41.181Z",
+  "fetched_at": "2026-11-10T15:04:03.342Z",
   "items": [
    {
-    "time_jst": "02:00 11/11",
+    "time_jst": "02:00",
     "title": "WASDE Poultry Production",
     "impact": "medium",
     "forecast": null
    },
    {
-    "time_jst": "03:00 11/11",
+    "time_jst": "03:00",
     "title": "10-Year Note Auction Allotted at High",
     "impact": "medium",
     "forecast": null
    },
    {
-    "time_jst": "03:00 11/11",
+    "time_jst": "03:00",
     "title": "10-Year Note Auction Bid-to-Cover",
     "impact": "medium",
     "forecast": null
    },
    {
-    "time_jst": "06:30 11/11",
+    "time_jst": "06:30",
     "title": "API Crude Oil Stock Change",
     "impact": "medium",
     "forecast": 0.5
