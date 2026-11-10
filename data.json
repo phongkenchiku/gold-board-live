@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-10T05:37:23.299Z",
+ "updated_at": "2026-11-10T06:39:52.439Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-10T05:37:23.068Z",
+  "fetched_at": "2026-11-10T06:39:52.393Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -2,
@@ -48,10 +48,10 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-10T05:37:22.945Z",
+  "fetched_at": "2026-11-10T06:39:52.186Z",
   "items": [
    {
-    "time_jst": "21:15",
+    "time_jst": "22:15",
     "title": "ADP Employment Change Weekly",
     "impact": "medium",
     "forecast": null
