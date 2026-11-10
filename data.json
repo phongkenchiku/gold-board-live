@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-10T19:49:52.462Z",
+ "updated_at": "2026-11-10T20:41:32.724Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-10T19:49:52.393Z",
+  "fetched_at": "2026-11-10T20:41:32.666Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -2,
@@ -48,13 +48,25 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-10T19:49:52.277Z",
+  "fetched_at": "2026-11-10T20:41:32.545Z",
   "items": [
    {
     "time_jst": "06:30",
     "title": "API Crude Oil Stock Change",
     "impact": "medium",
     "forecast": -1.483
+   },
+   {
+    "time_jst": "21:00",
+    "title": "MBA 5/1 ARM Contract Rate",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "21:00",
+    "title": "MBA 5/1 ARM Effective Rate",
+    "impact": "medium",
+    "forecast": null
    }
   ]
  }
