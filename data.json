@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-11T22:30:29.959Z",
+ "updated_at": "2026-11-11T23:33:44.805Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-11T22:30:29.877Z",
+  "fetched_at": "2026-11-11T23:33:44.805Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -2,
@@ -48,13 +48,25 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-11T22:30:29.706Z",
+  "fetched_at": "2026-11-11T23:33:44.497Z",
   "items": [
    {
     "time_jst": "22:30",
     "title": "Đơn trợ cấp thất nghiệp Mỹ",
     "impact": "medium",
     "forecast": 195
+   },
+   {
+    "time_jst": "00:00 13/11",
+    "title": "Existing Home Sales",
+    "impact": "high",
+    "forecast": 3.85
+   },
+   {
+    "time_jst": "00:00 13/11",
+    "title": "Existing Home Sales MoM",
+    "impact": "medium",
+    "forecast": null
    }
   ]
  }
