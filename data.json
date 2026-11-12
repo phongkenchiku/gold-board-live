@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-12T15:58:51.691Z",
+ "updated_at": "2026-11-12T17:01:54.542Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-12T15:58:51.520Z",
+  "fetched_at": "2026-11-12T17:01:54.542Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -2,
@@ -48,20 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-12T15:58:51.383Z",
+  "fetched_at": "2026-11-12T17:01:54.049Z",
   "items": [
-   {
-    "time_jst": "01:30",
-    "title": "4-Week Bill Auction Allotted at High",
-    "impact": "medium",
-    "forecast": null
-   },
-   {
-    "time_jst": "01:30",
-    "title": "4-Week Bill Auction Bid-to-Cover",
-    "impact": "medium",
-    "forecast": null
-   },
    {
     "time_jst": "02:00",
     "title": "EIA Ethanol Production",
@@ -71,6 +59,18 @@
    {
     "time_jst": "02:00",
     "title": "EIA Ethanol Stocks",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "03:00",
+    "title": "30-Year Bond Auction Allotted at High",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "03:00",
+    "title": "30-Year Bond Auction Bid-to-Cover",
     "impact": "medium",
     "forecast": null
    }
