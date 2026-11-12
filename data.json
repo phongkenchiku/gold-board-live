@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-12T21:02:15.141Z",
+ "updated_at": "2026-11-12T21:59:02.268Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,10 +16,10 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-12T21:02:15.083Z",
+  "fetched_at": "2026-11-12T21:59:02.098Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
-   "points": -2,
+   "points": -3,
    "usd": {
     "label": "USD broad",
     "value": 121.8803,
@@ -29,18 +29,18 @@
    },
    "us10y": {
     "label": "Lợi suất Mỹ 10Y",
-    "value": 4.88,
-    "change": 0.02,
+    "value": 4.98,
+    "change": 0.1,
     "unit": "%",
-    "date": "2026-11-09",
+    "date": "2026-11-10",
     "source": "FRED DGS10"
    },
    "real10y": {
     "label": "Lợi suất thực 10Y",
-    "value": 2.66,
-    "change": 0.03,
+    "value": 2.78,
+    "change": 0.12,
     "unit": "%",
-    "date": "2026-11-09",
+    "date": "2026-11-10",
     "source": "FRED DFII10"
    }
   }
@@ -48,7 +48,7 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-12T21:02:14.759Z",
+  "fetched_at": "2026-11-12T21:59:01.916Z",
   "items": [
    {
     "time_jst": "19:00",
@@ -61,6 +61,18 @@
     "title": "Employment Change QoQ Prel",
     "impact": "medium",
     "forecast": 0.1
+   },
+   {
+    "time_jst": "22:30",
+    "title": "PPI MoM",
+    "impact": "high",
+    "forecast": 0.4
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Core PPI MoM",
+    "impact": "medium",
+    "forecast": 0.3
    }
   ]
  }
