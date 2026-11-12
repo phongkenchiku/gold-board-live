@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-12T14:56:29.770Z",
+ "updated_at": "2026-11-12T15:58:51.691Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-12T14:56:29.682Z",
+  "fetched_at": "2026-11-12T15:58:51.520Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -2,
@@ -48,29 +48,29 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-12T14:56:29.506Z",
+  "fetched_at": "2026-11-12T15:58:51.383Z",
   "items": [
    {
-    "time_jst": "00:00 13/11",
-    "title": "Existing Home Sales",
-    "impact": "high",
-    "forecast": 3.85
-   },
-   {
-    "time_jst": "00:00 13/11",
-    "title": "Existing Home Sales MoM",
-    "impact": "medium",
-    "forecast": null
-   },
-   {
-    "time_jst": "01:30 13/11",
+    "time_jst": "01:30",
     "title": "4-Week Bill Auction Allotted at High",
     "impact": "medium",
     "forecast": null
    },
    {
-    "time_jst": "01:30 13/11",
+    "time_jst": "01:30",
     "title": "4-Week Bill Auction Bid-to-Cover",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "02:00",
+    "title": "EIA Ethanol Production",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "02:00",
+    "title": "EIA Ethanol Stocks",
     "impact": "medium",
     "forecast": null
    }
