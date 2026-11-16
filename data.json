@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-16T11:35:33.233Z",
+ "updated_at": "2026-11-16T14:10:26.692Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-16T11:35:33.233Z",
+  "fetched_at": "2026-11-16T14:10:26.692Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -3,
@@ -48,14 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-16T11:35:33.003Z",
+  "fetched_at": "2026-11-16T14:10:26.561Z",
   "items": [
-   {
-    "time_jst": "22:30",
-    "title": "NY Empire State Manufacturing Index",
-    "impact": "medium",
-    "forecast": 18
-   },
    {
     "time_jst": "01:30 17/11",
     "title": "3-Month Bill Auction Allotted at High",
