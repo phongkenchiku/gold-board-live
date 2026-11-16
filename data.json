@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-16T10:02:24.457Z",
+ "updated_at": "2026-11-16T11:35:33.233Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-16T10:02:24.359Z",
+  "fetched_at": "2026-11-16T11:35:33.233Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -3,
@@ -48,20 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-16T10:02:24.116Z",
+  "fetched_at": "2026-11-16T11:35:33.003Z",
   "items": [
-   {
-    "time_jst": "19:00",
-    "title": "Industrial Production MoM",
-    "impact": "medium",
-    "forecast": 0.3
-   },
-   {
-    "time_jst": "20:00",
-    "title": "Reserve Assets",
-    "impact": "medium",
-    "forecast": null
-   },
    {
     "time_jst": "22:30",
     "title": "NY Empire State Manufacturing Index",
@@ -73,6 +61,18 @@
     "title": "3-Month Bill Auction Allotted at High",
     "impact": "medium",
     "forecast": null
+   },
+   {
+    "time_jst": "01:30 17/11",
+    "title": "3-Month Bill Auction Bid-to-Cover",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "02:00 17/11",
+    "title": "NOPA Soybean Oil Stocks",
+    "impact": "medium",
+    "forecast": 1.089
    }
   ]
  }
