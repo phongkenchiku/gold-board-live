@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-16T16:16:05.081Z",
+ "updated_at": "2026-11-16T17:41:09.930Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-16T16:16:05.081Z",
+  "fetched_at": "2026-11-16T17:41:09.856Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -3,
@@ -48,26 +48,7 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-16T16:16:04.856Z",
-  "items": [
-   {
-    "time_jst": "01:30",
-    "title": "3-Month Bill Auction Allotted at High",
-    "impact": "medium",
-    "forecast": null
-   },
-   {
-    "time_jst": "01:30",
-    "title": "3-Month Bill Auction Bid-to-Cover",
-    "impact": "medium",
-    "forecast": null
-   },
-   {
-    "time_jst": "02:00",
-    "title": "NOPA Soybean Oil Stocks",
-    "impact": "medium",
-    "forecast": 1.089
-   }
-  ]
+  "fetched_at": "2026-11-16T17:41:09.740Z",
+  "items": []
  }
 }
