@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-16T20:34:44.321Z",
+ "updated_at": "2026-11-16T21:32:40.503Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,31 +16,31 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-16T20:34:44.183Z",
+  "fetched_at": "2026-11-16T21:32:40.450Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -3,
    "usd": {
     "label": "USD broad",
-    "value": 121.8803,
-    "change": 0.3742,
-    "date": "2026-11-06",
+    "value": 122.6503,
+    "change": 0.107,
+    "date": "2026-11-13",
     "source": "FRED DTWEXBGS"
    },
    "us10y": {
     "label": "Lợi suất Mỹ 10Y",
-    "value": 5.1,
-    "change": 0.12,
+    "value": 5.15,
+    "change": 0.05,
     "unit": "%",
-    "date": "2026-11-12",
+    "date": "2026-11-13",
     "source": "FRED DGS10"
    },
    "real10y": {
     "label": "Lợi suất thực 10Y",
-    "value": 2.86,
-    "change": 0.08,
+    "value": 2.91,
+    "change": 0.05,
     "unit": "%",
-    "date": "2026-11-12",
+    "date": "2026-11-13",
     "source": "FRED DFII10"
    }
   }
@@ -48,13 +48,31 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-16T20:34:44.021Z",
+  "fetched_at": "2026-11-16T21:32:40.264Z",
   "items": [
    {
     "time_jst": "19:00",
     "title": "ZEW Economic Sentiment Index",
     "impact": "medium",
     "forecast": null
+   },
+   {
+    "time_jst": "22:15",
+    "title": "ADP Employment Change Weekly",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "22:30",
+    "title": "United States-Imports/Exports-Export Pric…",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Export Prices MoM",
+    "impact": "medium",
+    "forecast": 0.5
    }
   ]
  }
