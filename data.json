@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-17T16:58:29.707Z",
+ "updated_at": "2026-11-17T18:00:03.828Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-17T16:58:29.643Z",
+  "fetched_at": "2026-11-17T18:00:03.828Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -3,
@@ -48,7 +48,7 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-17T16:58:29.493Z",
+  "fetched_at": "2026-11-17T18:00:03.273Z",
   "items": [
    {
     "time_jst": "06:30",
@@ -61,6 +61,12 @@
     "title": "Balance of Trade",
     "impact": "high",
     "forecast": -956
+   },
+   {
+    "time_jst": "19:00",
+    "title": "HICP Excluding Tobacco",
+    "impact": "medium",
+    "forecast": null
    }
   ]
  }
