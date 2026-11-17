@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-17T13:58:33.062Z",
+ "updated_at": "2026-11-17T14:54:58.582Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-17T13:58:33.030Z",
+  "fetched_at": "2026-11-17T14:54:58.582Z",
   "short_term": {
    "verdict": "ĐÈ GIÁ",
    "points": -3,
@@ -48,31 +48,31 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-17T13:58:32.732Z",
+  "fetched_at": "2026-11-17T14:54:58.421Z",
   "items": [
-   {
-    "time_jst": "22:30",
-    "title": "United States-Imports/Exports-Export Pric…",
-    "impact": "medium",
-    "forecast": null
-   },
-   {
-    "time_jst": "22:30",
-    "title": "Export Prices MoM",
-    "impact": "medium",
-    "forecast": 0.5
-   },
-   {
-    "time_jst": "23:15",
-    "title": "Industrial Production MoM",
-    "impact": "medium",
-    "forecast": 0.1
-   },
    {
     "time_jst": "00:00 18/11",
     "title": "Business Inventories MoM",
     "impact": "medium",
     "forecast": 0.5
+   },
+   {
+    "time_jst": "00:00 18/11",
+    "title": "NAHB Housing Market Index",
+    "impact": "medium",
+    "forecast": 29
+   },
+   {
+    "time_jst": "06:30 18/11",
+    "title": "API Crude Oil Stock Change",
+    "impact": "medium",
+    "forecast": -0.5
+   },
+   {
+    "time_jst": "08:50 18/11",
+    "title": "Balance of Trade",
+    "impact": "high",
+    "forecast": -956
    }
   ]
  }
