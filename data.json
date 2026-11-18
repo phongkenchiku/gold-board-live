@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-18T11:43:49.420Z",
+ "updated_at": "2026-11-18T12:45:08.075Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-18T11:43:49.420Z",
+  "fetched_at": "2026-11-18T12:45:08.075Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": 0,
@@ -48,20 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-18T11:43:49.155Z",
+  "fetched_at": "2026-11-18T12:45:07.794Z",
   "items": [
-   {
-    "time_jst": "21:00",
-    "title": "MBA 5/1 ARM Contract Rate",
-    "impact": "medium",
-    "forecast": null
-   },
-   {
-    "time_jst": "21:00",
-    "title": "MBA 5/1 ARM Effective Rate",
-    "impact": "medium",
-    "forecast": null
-   },
    {
     "time_jst": "22:30",
     "title": "Housing Starts",
@@ -73,6 +61,18 @@
     "title": "Housing Starts MoM",
     "impact": "medium",
     "forecast": null
+   },
+   {
+    "time_jst": "00:00 19/11",
+    "title": "Pending Home Sales Index",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "00:00 19/11",
+    "title": "Pending Home Sales MoM",
+    "impact": "medium",
+    "forecast": -2
    }
   ]
  }
