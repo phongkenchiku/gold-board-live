@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-18T18:04:15.448Z",
+ "updated_at": "2026-11-18T19:13:20.409Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-18T18:04:15.361Z",
+  "fetched_at": "2026-11-18T19:13:20.327Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": 0,
@@ -48,20 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-18T18:04:15.272Z",
+  "fetched_at": "2026-11-18T19:13:20.217Z",
   "items": [
-   {
-    "time_jst": "03:00",
-    "title": "20-Year Bond Auction Allotted at High",
-    "impact": "medium",
-    "forecast": null
-   },
-   {
-    "time_jst": "03:00",
-    "title": "20-Year Bond Auction Bid-to-Cover",
-    "impact": "medium",
-    "forecast": null
-   },
    {
     "time_jst": "06:00",
     "title": "Net Long-term TIC Flows",
@@ -71,6 +59,12 @@
    {
     "time_jst": "18:00",
     "title": "Current Account s.a",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "19:00",
+    "title": "Construction Output MoM",
     "impact": "medium",
     "forecast": null
    }
