@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-19T22:46:14.004Z",
+ "updated_at": "2026-11-19T23:41:46.138Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-19T22:46:13.919Z",
+  "fetched_at": "2026-11-19T23:41:46.056Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": 0,
@@ -48,13 +48,25 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-19T22:46:13.529Z",
+  "fetched_at": "2026-11-19T23:41:45.925Z",
   "items": [
    {
     "time_jst": "08:30",
     "title": "Inflation Rate YoY",
     "impact": "high",
     "forecast": null
+   },
+   {
+    "time_jst": "00:00 21/11",
+    "title": "Michigan Consumer Sentiment Final",
+    "impact": "medium",
+    "forecast": 51.5
+   },
+   {
+    "time_jst": "00:00 21/11",
+    "title": "Niềm tin tiêu dùng Mỹ",
+    "impact": "medium",
+    "forecast": -17.9
    }
   ]
  }
