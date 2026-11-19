@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-19T08:45:25.266Z",
+ "updated_at": "2026-11-19T09:59:54.591Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-19T08:45:25.219Z",
+  "fetched_at": "2026-11-19T09:59:54.591Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": 0,
@@ -48,14 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-19T08:45:24.842Z",
+  "fetched_at": "2026-11-19T09:59:54.289Z",
   "items": [
-   {
-    "time_jst": "18:00",
-    "title": "Current Account s.a",
-    "impact": "medium",
-    "forecast": null
-   },
    {
     "time_jst": "19:00",
     "title": "Construction Output MoM",
@@ -71,6 +65,12 @@
    {
     "time_jst": "22:30",
     "title": "USDA Pork Net Export Sales",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "01:30 20/11",
+    "title": "4-Week Bill Auction Allotted at High",
     "impact": "medium",
     "forecast": null
    }
