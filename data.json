@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-23T15:38:17.179Z",
+ "updated_at": "2026-11-23T16:39:09.034Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-23T15:38:17.056Z",
+  "fetched_at": "2026-11-23T16:39:08.981Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": 0,
@@ -48,7 +48,7 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-23T15:38:16.905Z",
+  "fetched_at": "2026-11-23T16:39:08.721Z",
   "items": [
    {
     "time_jst": "01:30",
