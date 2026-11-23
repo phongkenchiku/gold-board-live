@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-23T21:50:03.655Z",
+ "updated_at": "2026-11-23T22:50:19.586Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-23T21:50:03.655Z",
+  "fetched_at": "2026-11-23T22:50:19.569Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": 1,
@@ -48,13 +48,25 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-23T21:50:03.531Z",
+  "fetched_at": "2026-11-23T22:50:19.263Z",
   "items": [
    {
     "time_jst": "22:15",
     "title": "ADP Employment Change Weekly",
     "impact": "medium",
     "forecast": null
+   },
+   {
+    "time_jst": "23:00",
+    "title": "S&P/Case-Shiller 20-City Home Price MoM s…",
+    "impact": "medium",
+    "forecast": 0.2
+   },
+   {
+    "time_jst": "23:00",
+    "title": "S&P/Case-Shiller Home Price YoY",
+    "impact": "medium",
+    "forecast": 2.7
    }
   ]
  }
