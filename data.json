@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-23T09:20:28.361Z",
+ "updated_at": "2026-11-23T10:38:11.993Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-23T09:20:28.205Z",
+  "fetched_at": "2026-11-23T10:38:11.947Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": 0,
@@ -48,20 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-23T09:20:28.030Z",
+  "fetched_at": "2026-11-23T10:38:11.872Z",
   "items": [
-   {
-    "time_jst": "18:00",
-    "title": "S&P Global Composite PMI Flash",
-    "impact": "medium",
-    "forecast": 51.9
-   },
-   {
-    "time_jst": "18:00",
-    "title": "S&P Global Manufacturing PMI Flash",
-    "impact": "medium",
-    "forecast": 52.8
-   },
    {
     "time_jst": "22:30",
     "title": "Chicago Fed National Activity Index",
@@ -73,6 +61,18 @@
     "title": "S&P Global Services PMI Flash",
     "impact": "medium",
     "forecast": 55.6
+   },
+   {
+    "time_jst": "23:45",
+    "title": "S&P Global Composite PMI Flash",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "01:30 24/11",
+    "title": "3-Month Bill Auction Allotted at High",
+    "impact": "medium",
+    "forecast": null
    }
   ]
  }
