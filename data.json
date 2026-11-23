@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-23T12:47:32.239Z",
+ "updated_at": "2026-11-23T14:25:16.653Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-23T12:47:32.086Z",
+  "fetched_at": "2026-11-23T14:25:16.508Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": 0,
@@ -48,14 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-23T12:47:31.900Z",
+  "fetched_at": "2026-11-23T14:25:16.346Z",
   "items": [
-   {
-    "time_jst": "22:30",
-    "title": "Chicago Fed National Activity Index",
-    "impact": "medium",
-    "forecast": null
-   },
    {
     "time_jst": "23:45",
     "title": "S&P Global Services PMI Flash",
@@ -71,6 +65,12 @@
    {
     "time_jst": "01:30 24/11",
     "title": "3-Month Bill Auction Allotted at High",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "01:30 24/11",
+    "title": "3-Month Bill Auction Bid-to-Cover",
     "impact": "medium",
     "forecast": null
    }
