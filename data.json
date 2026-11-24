@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-24T11:39:58.838Z",
+ "updated_at": "2026-11-24T21:33:20.373Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,10 +16,10 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-24T11:39:58.673Z",
+  "fetched_at": "2026-11-24T21:33:20.219Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
-   "points": 1,
+   "points": -1,
    "usd": {
     "label": "USD broad",
     "value": 123.5978,
@@ -30,17 +30,17 @@
    "us10y": {
     "label": "Lợi suất Mỹ 10Y",
     "value": 4.92,
-    "change": -0.12,
+    "change": 0,
     "unit": "%",
-    "date": "2026-11-20",
+    "date": "2026-11-23",
     "source": "FRED DGS10"
    },
    "real10y": {
     "label": "Lợi suất thực 10Y",
-    "value": 2.77,
-    "change": -0.11,
+    "value": 2.79,
+    "change": 0.02,
     "unit": "%",
-    "date": "2026-11-20",
+    "date": "2026-11-23",
     "source": "FRED DFII10"
    }
   }
@@ -48,31 +48,31 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-24T11:39:58.539Z",
+  "fetched_at": "2026-11-24T21:33:20.104Z",
   "items": [
    {
-    "time_jst": "22:15",
-    "title": "ADP Employment Change Weekly",
+    "time_jst": "06:30",
+    "title": "API Crude Oil Stock Change",
+    "impact": "medium",
+    "forecast": 1.45
+   },
+   {
+    "time_jst": "21:00",
+    "title": "MBA 5/1 ARM Contract Rate",
     "impact": "medium",
     "forecast": null
    },
    {
-    "time_jst": "23:00",
-    "title": "S&P/Case-Shiller 20-City Home Price MoM s…",
+    "time_jst": "21:00",
+    "title": "MBA 5/1 ARM Effective Rate",
     "impact": "medium",
-    "forecast": 0.2
+    "forecast": null
    },
    {
-    "time_jst": "23:00",
-    "title": "S&P/Case-Shiller Home Price YoY",
-    "impact": "medium",
-    "forecast": 2.7
-   },
-   {
-    "time_jst": "00:00 25/11",
-    "title": "Niềm tin tiêu dùng Mỹ",
-    "impact": "medium",
-    "forecast": 92.5
+    "time_jst": "22:30",
+    "title": "Personal Spending MoM",
+    "impact": "high",
+    "forecast": 0.4
    }
   ]
  }
