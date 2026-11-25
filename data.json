@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-24T21:33:20.373Z",
+ "updated_at": "2026-11-25T04:37:17.250Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-24T21:33:20.219Z",
+  "fetched_at": "2026-11-25T04:37:17.120Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": -1,
@@ -48,14 +48,8 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-24T21:33:20.104Z",
+  "fetched_at": "2026-11-25T04:37:16.978Z",
   "items": [
-   {
-    "time_jst": "06:30",
-    "title": "API Crude Oil Stock Change",
-    "impact": "medium",
-    "forecast": 1.45
-   },
    {
     "time_jst": "21:00",
     "title": "MBA 5/1 ARM Contract Rate",
@@ -73,6 +67,12 @@
     "title": "Personal Spending MoM",
     "impact": "high",
     "forecast": 0.4
+   },
+   {
+    "time_jst": "22:30",
+    "title": "PCE Services Prices ex Energy & Housing M…",
+    "impact": "medium",
+    "forecast": null
    }
   ]
  }
