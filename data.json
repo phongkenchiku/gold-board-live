@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-25T14:59:54.011Z",
+ "updated_at": "2026-11-25T23:34:45.726Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-25T14:59:53.941Z",
+  "fetched_at": "2026-11-25T23:34:45.680Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": -1,
@@ -29,18 +29,18 @@
    },
    "us10y": {
     "label": "Lợi suất Mỹ 10Y",
-    "value": 4.92,
-    "change": 0,
+    "value": 4.91,
+    "change": -0.01,
     "unit": "%",
-    "date": "2026-11-23",
+    "date": "2026-11-24",
     "source": "FRED DGS10"
    },
    "real10y": {
     "label": "Lợi suất thực 10Y",
     "value": 2.79,
-    "change": 0.02,
+    "change": 0,
     "unit": "%",
-    "date": "2026-11-23",
+    "date": "2026-11-24",
     "source": "FRED DFII10"
    }
   }
@@ -48,31 +48,13 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-25T14:59:53.721Z",
+  "fetched_at": "2026-11-25T23:34:45.562Z",
   "items": [
    {
-    "time_jst": "00:00 26/11",
-    "title": "New Home Sales",
+    "time_jst": "18:00",
+    "title": "M3 Money Supply Annual Growth",
     "impact": "medium",
-    "forecast": 0.65
-   },
-   {
-    "time_jst": "00:00 26/11",
-    "title": "New Home Sales MoM",
-    "impact": "medium",
-    "forecast": null
-   },
-   {
-    "time_jst": "00:30 26/11",
-    "title": "EIA Ethanol Production",
-    "impact": "medium",
-    "forecast": null
-   },
-   {
-    "time_jst": "00:30 26/11",
-    "title": "EIA Ethanol Stocks",
-    "impact": "medium",
-    "forecast": null
+    "forecast": 3.5
    }
   ]
  }
