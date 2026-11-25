@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-25T04:37:17.250Z",
+ "updated_at": "2026-11-25T14:59:54.011Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-25T04:37:17.120Z",
+  "fetched_at": "2026-11-25T14:59:53.941Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": -1,
@@ -48,29 +48,29 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-25T04:37:16.978Z",
+  "fetched_at": "2026-11-25T14:59:53.721Z",
   "items": [
    {
-    "time_jst": "21:00",
-    "title": "MBA 5/1 ARM Contract Rate",
+    "time_jst": "00:00 26/11",
+    "title": "New Home Sales",
+    "impact": "medium",
+    "forecast": 0.65
+   },
+   {
+    "time_jst": "00:00 26/11",
+    "title": "New Home Sales MoM",
     "impact": "medium",
     "forecast": null
    },
    {
-    "time_jst": "21:00",
-    "title": "MBA 5/1 ARM Effective Rate",
+    "time_jst": "00:30 26/11",
+    "title": "EIA Ethanol Production",
     "impact": "medium",
     "forecast": null
    },
    {
-    "time_jst": "22:30",
-    "title": "Personal Spending MoM",
-    "impact": "high",
-    "forecast": 0.4
-   },
-   {
-    "time_jst": "22:30",
-    "title": "PCE Services Prices ex Energy & Housing M…",
+    "time_jst": "00:30 26/11",
+    "title": "EIA Ethanol Stocks",
     "impact": "medium",
     "forecast": null
    }
