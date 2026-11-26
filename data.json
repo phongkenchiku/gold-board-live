@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-26T05:29:15.795Z",
+ "updated_at": "2026-11-26T15:41:49.885Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-26T05:29:15.768Z",
+  "fetched_at": "2026-11-26T15:41:49.885Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": -1,
@@ -48,14 +48,7 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-26T05:29:15.561Z",
-  "items": [
-   {
-    "time_jst": "18:00",
-    "title": "M3 Money Supply Annual Growth",
-    "impact": "medium",
-    "forecast": 3.5
-   }
-  ]
+  "fetched_at": "2026-11-26T15:41:49.630Z",
+  "items": []
  }
 }
