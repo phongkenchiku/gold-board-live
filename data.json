@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-26T15:41:49.885Z",
+ "updated_at": "2026-11-27T00:03:56.036Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,7 +16,7 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-26T15:41:49.885Z",
+  "fetched_at": "2026-11-27T00:03:56.036Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
    "points": -1,
@@ -48,7 +48,32 @@
  "news": {
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-26T15:41:49.630Z",
-  "items": []
+  "fetched_at": "2026-11-27T00:03:55.761Z",
+  "items": [
+   {
+    "time_jst": "19:00",
+    "title": "Business Confidence Index",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "19:00",
+    "title": "Economic Sentiment",
+    "impact": "medium",
+    "forecast": 97.2
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Retail Inventories Ex Autos MoM Adv",
+    "impact": "medium",
+    "forecast": null
+   },
+   {
+    "time_jst": "22:30",
+    "title": "Wholesale Inventories MoM Adv",
+    "impact": "medium",
+    "forecast": null
+   }
+  ]
  }
 }
