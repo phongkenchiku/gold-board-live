@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-27T18:29:29.044Z",
+ "updated_at": "2026-11-28T01:38:23.268Z",
  "macro": {
   "long_term": {
    "central_bank_net_buy_tonnes": 321,
@@ -16,10 +16,10 @@
   "sources": "USD/lợi suất: FRED · Dài hạn: World Gold Council",
   "ok": true,
   "stale": false,
-  "fetched_at": "2026-11-27T18:29:29.044Z",
+  "fetched_at": "2026-11-28T01:38:23.268Z",
   "short_term": {
    "verdict": "TRUNG TÍNH",
-   "points": -1,
+   "points": 1,
    "usd": {
     "label": "USD broad",
     "value": 123.5978,
@@ -29,26 +29,26 @@
    },
    "us10y": {
     "label": "Lợi suất Mỹ 10Y",
-    "value": 4.91,
-    "change": -0.01,
+    "value": 4.85,
+    "change": -0.06,
     "unit": "%",
-    "date": "2026-11-24",
+    "date": "2026-11-25",
     "source": "FRED DGS10"
    },
    "real10y": {
     "label": "Lợi suất thực 10Y",
-    "value": 2.79,
-    "change": 0,
+    "value": 2.73,
+    "change": -0.06,
     "unit": "%",
-    "date": "2026-11-24",
+    "date": "2026-11-25",
     "source": "FRED DFII10"
    }
   }
  },
  "news": {
-  "ok": true,
+  "ok": false,
   "stale": false,
-  "fetched_at": "2026-11-27T18:29:28.664Z",
+  "fetched_at": "2026-11-28T01:38:23.021Z",
   "items": []
  }
 }
